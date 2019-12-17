@@ -4,47 +4,100 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <string>
-
+#include <iostream>
+#include <vector>
 #include "app.h"
 #include "cube.h"
+#include "TrackballCamera.hpp"
+
 
 int main(int argc, char *argv[]) {
     App app;
-    Cube myCube;
-    Cube myCube2;
+	//activation de la transparence
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    glClearColor(1, 0, 1, 1);
+	// couleur de la fenêtre
+    glClearColor(197.0/255, 217.0/255, 222.0/255, 1);
 
-    while (app.isRunning()) {
-        SDL_Event e;
-        while (SDL_PollEvent(&e)) {
-            switch (e.type) {
-            case SDL_QUIT: app.exit();
+	/* Création de la matrice MV  */
+	glm::mat4 globalMVMatrix;
 
-            case SDL_KEYDOWN:
-                if (e.key.keysym.scancode == SDL_SCANCODE_LEFT) {
-                    myCube.position.x--;
-                } else if (e.key.keysym.scancode == SDL_SCANCODE_RIGHT) {
-                    myCube.position.x++;
-                } else if (e.key.keysym.scancode == SDL_SCANCODE_UP) {
-                    myCube.position.y++;
-                } else if (e.key.keysym.scancode == SDL_SCANCODE_DOWN) {
-                    myCube.position.y--;
-                } else if (e.key.keysym.scancode == SDL_SCANCODE_PAGEUP) {
-                    myCube.position.z++;
-                } else if (e.key.keysym.scancode == SDL_SCANCODE_PAGEDOWN) {
-                    myCube.position.z--;
-                }
+	//creation de la camera trackballCamera
+	glimac::TrackballCamera camera;
 
-            default: break;
-            };
-        }
+	//camera parameter
+	float zoom = 1.0f;
+	float speed = 1.0f;
 
-        app.beginFrame();
+	// création des cubes
+	const int nbCubesLigne = 2;
+	const int nbCubesMonde = nbCubesLigne* nbCubesLigne* nbCubesLigne;
+	Cube cubesMonde[nbCubesMonde];
 
-        myCube.draw();
-        myCube2.draw();
+	//application loop
+	while (app.isRunning()) {
+		SDL_Event e;
+		while (SDL_PollEvent(&e)) {
+			switch (e.type) {
+			case SDL_QUIT:
+				app.exit();
+				break;
 
+				/* Touche clavier */
+			case SDL_KEYDOWN:
+
+				if (e.key.keysym.sym == SDLK_z
+					|| e.key.keysym.sym == SDLK_UP) {
+					std::cout << "Z or UP pressed" << std::endl;
+					camera.moveFront(zoom);
+				}
+				else if (e.key.keysym.sym == SDLK_s
+					|| e.key.keysym.sym == SDLK_DOWN) {
+					std::cout << "S or DOWN pressed" << std::endl;
+					camera.moveFront(-zoom);
+				}
+				break;
+
+
+			case SDL_MOUSEMOTION:
+
+				//std::cout << "Mouse move: ";
+				//std::cout << e.motion.xrel << " | " << e.motion.yrel << std::endl;
+				if (e.motion.xrel != 0) {
+					camera.rotateRight(float(e.motion.xrel) * speed);
+				}
+				if (e.motion.yrel != 0) {
+					camera.rotateLeft(float(e.motion.yrel) * speed);
+				}
+
+				break;
+			default:
+				break;
+			}
+		}
+
+		// rendering code 
+
+	    /* Calcul de la camera */
+		globalMVMatrix = camera.getViewMatrix();
+
+		app.beginFrame();
+		// état initial du monde
+		int indice = 0;
+		for (int x = -(nbCubesLigne/2); x < nbCubesLigne/2; x++) {
+			for (int y = -(nbCubesLigne / 2); y < nbCubesLigne / 2; y++) {
+				for (int z = -(nbCubesLigne / 2); z < nbCubesLigne / 2; z++) {
+					cubesMonde[indice].position.x = x;
+					cubesMonde[indice].position.y = y;
+					cubesMonde[indice].position.z = z;
+					cubesMonde[indice].draw(camera);
+					std::cout << indice << std::endl;
+					indice += 1;
+				}
+			}
+		}
+			   
         app.endFrame();
     }
     
