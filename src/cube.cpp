@@ -13,17 +13,17 @@ namespace cubeData {
     //  v2------v3
     const glm::vec3 positions[] = {
         // Front v0,v1,v2,v3
-        glm::vec3(1, 1, 1), glm::vec3(-1, 1, 1), glm::vec3(-1, -1, 1), glm::vec3(1, -1, 1),
+        glm::vec3(0.5, 0.5, 0.5), glm::vec3(-0.5, 0.5, 0.5), glm::vec3(-0.5, -0.5, 0.5), glm::vec3(0.5, -0.5, 0.5),
         // Right v0,v3,v4,v5
-        glm::vec3(1, 1, 1), glm::vec3(1, -1, 1), glm::vec3(1, -1, -1), glm::vec3(1, 1, -1),
-        // Top v0,v5,v6,v1	
-        glm::vec3(1, 1, 1), glm::vec3(1, 1, -1), glm::vec3(-1, 1, -1), glm::vec3(-1, 1, 1), 
-        // Left v1,v6,v7,v2	
-        glm::vec3(-1, 1, 1), glm::vec3(-1, 1, -1), glm::vec3(-1, -1, -1), glm::vec3(-1, -1, 1),  
+        glm::vec3(0.5, 0.5, 0.5), glm::vec3(0.5, -0.5, 0.5), glm::vec3(0.5, -0.5, -0.5), glm::vec3(0.5, 0.5, -0.5),
+        // Top v0,v5,v6,v0.5	
+        glm::vec3(0.5, 0.5, 0.5), glm::vec3(0.5, 0.5, -0.5), glm::vec3(-0.5, 0.5, -0.5), glm::vec3(-0.5, 0.5, 0.5),
+        // Left v0.5,v6,v7,v2	
+        glm::vec3(-0.5, 0.5, 0.5), glm::vec3(-0.5, 0.5, -0.5), glm::vec3(-0.5, -0.5, -0.5), glm::vec3(-0.5, -0.5, 0.5),  
         // Bottom v7,v4,v3,v2
-        glm::vec3(-1, -1, -1), glm::vec3(1, -1, -1), glm::vec3(1, -1, 1), glm::vec3(-1, -1, 1), 
+        glm::vec3(-0.5, -0.5, -0.5), glm::vec3(0.5, -0.5, -0.5), glm::vec3(0.5, -0.5, 0.5), glm::vec3(-0.5, -0.5, 0.5), 
         // Back v4,v7,v6,v5	
-        glm::vec3(1, -1, -1), glm::vec3(-1, -1, -1), glm::vec3(-1, 1, -1), glm::vec3(1, 1, -1)
+        glm::vec3(0.5, -0.5, -0.5), glm::vec3(-0.5, -0.5, -0.5), glm::vec3(-0.5, 0.5, -0.5), glm::vec3(0.5, 0.5, -0.5)
     };
 
     const glm::vec3 normals[] = {
@@ -97,6 +97,23 @@ Cube::Cube()
 
 Cube::~Cube()
 {
+}
+
+void Cube::draw(const glimac::TrackballCamera &cam) {
+	// Bind
+	GLCall(glBindVertexArray(m_vao));
+	GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ib));
+	m_shader.bind();
+
+	// Update model mat uniform
+	glm::mat4 projMat = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 100.0f);
+	m_shader.setUniformMat4f("uViewProj", projMat * cam.getViewMatrix());
+
+	glm::mat4 modelMat = glm::translate(glm::mat4(1.0f), position);
+	m_shader.setUniformMat4f("uModel", modelMat);
+
+	// Draw call
+	GLCall(glDrawElements(GL_TRIANGLES, std::size(cubeData::indices), GL_UNSIGNED_SHORT, (void*)0));
 }
 
 void Cube::draw() {
