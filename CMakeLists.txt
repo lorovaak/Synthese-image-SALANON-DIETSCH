@@ -7,6 +7,13 @@ project(DIETSCH_SALANON C CXX)
 # /////////////////////////////////////////////////////////////////////////////
 
 file(GLOB_RECURSE MY_COMMON src/*)
+# Recreate folder architecture inside visual studio solution (probably works for other IDEs as well)
+foreach(_source IN ITEMS ${MY_SOURCES})
+    get_filename_component(_source_path "${_source}" PATH)
+    string(REPLACE "${CMAKE_SOURCE_DIR}" "" _group_path "${_source_path}")
+    string(REPLACE "/" "\\" _group_path "${_group_path}")
+    source_group("${_group_path}" FILES "${_source}")
+endforeach()
 
 # /////////////////////////////////////////////////////////////////////////////
 # /////////////////////////////// DEPENDENCIES ////////////////////////////////
@@ -66,3 +73,8 @@ if (WIN32) # Copy .dll to build folder
         $<TARGET_FILE_DIR:${PROJECT_NAME}>
     )
 endif()
+
+# Setup working directory (to access the res folder) :
+set_target_properties(
+    ${PROJECT_NAME} PROPERTIES
+    VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
