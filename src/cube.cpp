@@ -99,7 +99,8 @@ Cube::~Cube()
 {
 }
 
-void Cube::draw(const glimac::TrackballCamera &cam) {
+//void Cube::draw(int i,const glimac::TrackballCamera &cam) {
+void Cube::draw(const glimac::TrackballCamera & cam) {
 	// Bind
 	GLCall(glBindVertexArray(m_vao));
 	GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ib));
@@ -111,6 +112,8 @@ void Cube::draw(const glimac::TrackballCamera &cam) {
 
 	glm::mat4 modelMat = glm::translate(glm::mat4(1.0f), position);
 	m_shader.setUniformMat4f("uModel", modelMat);
+
+	//m_shader.setUniform1i("ucolor", i);
 
 	// Draw call
 	GLCall(glDrawElements(GL_TRIANGLES, std::size(cubeData::indices), GL_UNSIGNED_SHORT, (void*)0));

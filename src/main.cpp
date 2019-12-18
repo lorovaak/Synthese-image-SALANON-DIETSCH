@@ -31,9 +31,22 @@ int main(int argc, char *argv[]) {
 	float speed = 1.0f;
 
 	// création des cubes
-	const int nbCubesLigne = 2;
+	const int nbCubesLigne = 10;
 	const int nbCubesMonde = nbCubesLigne* nbCubesLigne* nbCubesLigne;
-	Cube cubesMonde[nbCubesMonde];
+	std::vector<Cube> cubesMonde(nbCubesMonde);
+
+	int indice = 0;
+	for (int x = -(nbCubesLigne / 2); x < nbCubesLigne / 2; x++) {
+		for (int y = -(nbCubesLigne / 2); y < nbCubesLigne / 2; y++) {
+			for (int z = -(nbCubesLigne / 2); z < nbCubesLigne / 2; z++) {
+				cubesMonde[indice].position.x = x;
+				cubesMonde[indice].position.y = y;
+				cubesMonde[indice].position.z = z;
+				indice += 1;
+			}
+		}
+	}
+	
 
 	//application loop
 	while (app.isRunning()) {
@@ -83,19 +96,10 @@ int main(int argc, char *argv[]) {
 		globalMVMatrix = camera.getViewMatrix();
 
 		app.beginFrame();
-		// état initial du monde
-		int indice = 0;
-		for (int x = -(nbCubesLigne/2); x < nbCubesLigne/2; x++) {
-			for (int y = -(nbCubesLigne / 2); y < nbCubesLigne / 2; y++) {
-				for (int z = -(nbCubesLigne / 2); z < nbCubesLigne / 2; z++) {
-					cubesMonde[indice].position.x = x;
-					cubesMonde[indice].position.y = y;
-					cubesMonde[indice].position.z = z;
-					cubesMonde[indice].draw(camera);
-					std::cout << indice << std::endl;
-					indice += 1;
-				}
-			}
+
+		for (int i = 0; i < nbCubesMonde; i++) {
+			//cubesMonde[i].draw(1,camera);
+			cubesMonde[i].draw(camera);
 		}
 			   
         app.endFrame();
