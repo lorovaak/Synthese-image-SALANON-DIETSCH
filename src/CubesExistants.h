@@ -3,19 +3,23 @@
 #include <glm/glm.hpp>
 #include "TrackballCamera.hpp"
 #include "shader.h"
+#include <vector>
+#include <glad/glad.h>
 
-class Cube {
+class CubesExistants {
 public:
-    Cube();
-    ~Cube();
+    CubesExistants();
+    ~CubesExistants();
 	void draw(const glimac::TrackballCamera& cam);
     void draw();
-    
+	void creerUnCube(glm::vec3 coordonees);
+
 public:
-    glm::vec3 position;
+	std::vector<glm::vec3> positionCubesExistants;
 
 private:
     unsigned int m_vao;
     unsigned int m_ib;
     Shader m_shader;
+	GLuint vbPositionsCubesID;
 };

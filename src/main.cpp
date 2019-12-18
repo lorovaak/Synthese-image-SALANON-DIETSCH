@@ -7,18 +7,18 @@
 #include <iostream>
 #include <vector>
 #include "app.h"
-#include "cube.h"
+#include "CubesExistants.h"
 #include "TrackballCamera.hpp"
 
 
-int main(int argc, char *argv[]) {
-    App app;
+int main(int argc, char* argv[]) {
+	App app;
 	//activation de la transparence
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	// couleur de la fenêtre
-    glClearColor(197.0/255, 217.0/255, 222.0/255, 1);
+	glClearColor(197.0 / 255, 217.0 / 255, 222.0 / 255, 1);
 
 	/* Création de la matrice MV  */
 	glm::mat4 globalMVMatrix;
@@ -32,21 +32,18 @@ int main(int argc, char *argv[]) {
 
 	// création des cubes
 	const int nbCubesLigne = 10;
-	const int nbCubesMonde = nbCubesLigne* nbCubesLigne* nbCubesLigne;
-	std::vector<Cube> cubesMonde(nbCubesMonde);
+	const int nbCubesMonde = nbCubesLigne * nbCubesLigne * nbCubesLigne;
 
-	int indice = 0;
-	for (int x = -(nbCubesLigne / 2); x < nbCubesLigne / 2; x++) {
-		for (int y = -(nbCubesLigne / 2); y < nbCubesLigne / 2; y++) {
-			for (int z = -(nbCubesLigne / 2); z < nbCubesLigne / 2; z++) {
-				cubesMonde[indice].position.x = x;
-				cubesMonde[indice].position.y = y;
-				cubesMonde[indice].position.z = z;
-				indice += 1;
-			}
+	CubesExistants cubesExistants;
+
+	// sol état initial du monde 3 couches de blocs de même couleur
+for (int x = -(nbCubesLigne / 2); x < nbCubesLigne / 2; x++) {
+	for (int y = -(3 / 2); y < 3 / 2; y++) {
+		for (int z = -(nbCubesLigne / 2); z < nbCubesLigne / 2; z++) {
+			cubesExistants.creerUnCube(glm::vec3(x, y, z));
 		}
 	}
-	
+}
 
 	//application loop
 	while (app.isRunning()) {
@@ -92,18 +89,16 @@ int main(int argc, char *argv[]) {
 
 		// rendering code 
 
-	    /* Calcul de la camera */
+		/* Calcul de la camera */
 		globalMVMatrix = camera.getViewMatrix();
 
 		app.beginFrame();
 
-		for (int i = 0; i < nbCubesMonde; i++) {
-			//cubesMonde[i].draw(1,camera);
-			cubesMonde[i].draw(camera);
-		}
-			   
-        app.endFrame();
-    }
-    
-    return 0;
+
+		cubesExistants.draw(camera);
+
+		app.endFrame();
+	}
+
+	return 0;
 }

@@ -1,4 +1,4 @@
-#include "cube.h"
+#include "CubesExistants.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include "gl-exception.h"
@@ -45,8 +45,8 @@ namespace cubeData {
     };
 }
 
-Cube::Cube() 
-    : m_vao(0), m_ib(0), position(0), m_shader("res/shaders/basic.vert", "res/shaders/basic.frag")
+CubesExistants::CubesExistants()
+    : m_vao(0), m_ib(0), m_shader("res/shaders/basic.vert", "res/shaders/basic.frag")
 {
     // ------------------ Vertex Buffer
     unsigned int posVB;
@@ -56,6 +56,11 @@ Cube::Cube()
         GLCall(glBufferData(GL_ARRAY_BUFFER, sizeof(cubeData::positions), cubeData::positions, GL_STATIC_DRAW));
         GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
     }
+
+
+	// on crée le buffer
+	glGenBuffers(1, &vbPositionsCubesID);
+	
     
     // ------------------ Vertex Array
     {
@@ -68,6 +73,11 @@ Cube::Cube()
             GLCall(glBindBuffer(GL_ARRAY_BUFFER, posVB));
             GLCall(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), NULL));
         }
+
+		glBindBuffer(GL_ARRAY_BUFFER, vbPositionsCubesID);
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
+		glVertexAttribDivisor(1, 1);
         
         GLCall(glBindVertexArray(0));
     }
@@ -95,12 +105,12 @@ Cube::Cube()
     m_shader.unbind();
 }
 
-Cube::~Cube()
+CubesExistants::~CubesExistants()
 {
 }
 
-//void Cube::draw(int i,const glimac::TrackballCamera &cam) {
-void Cube::draw(const glimac::TrackballCamera & cam) {
+//void CubesExistants::draw(int i,const glimac::TrackballCamera &cam) {
+void CubesExistants::draw(const glimac::TrackballCamera & cam) {
 	// Bind
 	GLCall(glBindVertexArray(m_vao));
 	GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ib));
@@ -108,27 +118,36 @@ void Cube::draw(const glimac::TrackballCamera & cam) {
 
 	// Update model mat uniform
 	glm::mat4 projMat = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 100.0f);
-	m_shader.setUniformMat4f("uViewProj", projMat * cam.getViewMatrix());
-
-	glm::mat4 modelMat = glm::translate(glm::mat4(1.0f), position);
-	m_shader.setUniformMat4f("uModel", modelMat);
+	m_shader.setUniformMat4f("uViewProj", projMat *cam.getViewMatrix());
 
 	//m_shader.setUniform1i("ucolor", i);
 
 	// Draw call
-	GLCall(glDrawElements(GL_TRIANGLES, std::size(cubeData::indices), GL_UNSIGNED_SHORT, (void*)0));
+	//GLCall(glDrawElements(GL_TRIANGLES, std::size(cubeData::indices), GL_UNSIGNED_SHORT, (void*)0));
+	glDrawElementsInstanced(GL_TRIANGLES, std::size(cubeData::indices), GL_UNSIGNED_SHORT, 0, positionCubesExistants.size());
 }
 
-void Cube::draw() {
-    // Bind
-    GLCall(glBindVertexArray(m_vao));
-    GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ib));
-    m_shader.bind();
 
-    // Update model mat uniform
-    glm::mat4 modelMat = glm::translate(glm::mat4(1.0f), position);
-    m_shader.setUniformMat4f("uModel", modelMat);
+void CubesExistants::creerUnCube(glm::vec3 coordonees) {
+	
+	// On gere la position du cube créé
 
-    // Draw call
-    GLCall(glDrawElements(GL_TRIANGLES, std::size(cubeData::indices), GL_UNSIGNED_SHORT, (void*) 0));
+	positionCubesExistants.push_back(coordonees);
+	// on le bind pour que la ligne suivante s'applique bien à ce buffer ci
+	glBindBuffer(GL_ARRAY_BUFFER, vbPositionsCubesID);
+	// on envoie toutes nos données au GPU
+	glBufferData(GL_ARRAY_BUFFER, positionCubesExistants.size()*sizeof(glm::vec3), &positionCubesExistants[0], GL_STATIC_DRAW);
+	// on unbind
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	// On gère la couleur du cube créé 
+
+	//couleursCubesExistants.push_back(couleurs);
+	//glBindBuffer(GL_ARRAY_BUFFER, vbPositionsCubesID);
+	//// on envoie toutes nos données au GPU
+	//glBufferData(GL_ARRAY_BUFFER, positionCubesExistants.size() * sizeof(glm::vec3), &positionCubesExistants[0], GL_STATIC_DRAW);
+	//// on unbind
+	//glBindBuffer(GL_ARRAY_BUFFER, 0);
+
 }
+
