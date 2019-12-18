@@ -9,6 +9,7 @@
 #include "app.h"
 #include "CubesExistants.h"
 #include "TrackballCamera.hpp"
+#include "Curseur.h"
 
 
 int main(int argc, char* argv[]) {
@@ -40,10 +41,13 @@ int main(int argc, char* argv[]) {
 	for (int x = -(nbCubesLigne / 2); x < nbCubesLigne / 2; x++) {
 		for (int y = -(3 / 2); y < 3 / 2; y++) {
 			for (int z = -(nbCubesLigne / 2); z < nbCubesLigne / 2; z++) {
-				cubesExistants.creerUnCube(glm::vec3(x, y, z),glm::vec4( 0.f, 1.f, 0.f, 1.f));
+				cubesExistants.creerUnCube(glm::vec3(x, y, z),glm::vec4( 1.f, 0.f, 0.f, 0.1f));
 			}
 		}
 	}
+
+	//creation du curseur
+	Curseur curseur;
 	
 	//application loop
 	while (app.isRunning()) {
@@ -94,7 +98,7 @@ int main(int argc, char* argv[]) {
 
 		app.beginFrame();
 
-
+		curseur.cubeCurseur.draw(camera);
 		cubesExistants.draw(camera);
 
 		app.endFrame();
