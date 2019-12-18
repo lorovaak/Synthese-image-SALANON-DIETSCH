@@ -60,6 +60,7 @@ CubesExistants::CubesExistants()
 
 	// on crée le buffer
 	glGenBuffers(1, &vbPositionsCubesID);
+	glGenBuffers(1, &vbCouleursCubesID);
 	
     
     // ------------------ Vertex Array
@@ -78,6 +79,11 @@ CubesExistants::CubesExistants()
 		glEnableVertexAttribArray(1);
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
 		glVertexAttribDivisor(1, 1);
+
+		glBindBuffer(GL_ARRAY_BUFFER, vbCouleursCubesID);
+		glEnableVertexAttribArray(2);
+		glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
+		glVertexAttribDivisor(2, 1);
         
         GLCall(glBindVertexArray(0));
     }
@@ -92,10 +98,6 @@ CubesExistants::CubesExistants()
 
     // ------------------ Default values for uniforms
     m_shader.bind();
-    {
-        glm::mat4 modelMat = glm::mat4(1.0f);
-        m_shader.setUniformMat4f("uModel", modelMat);
-    }
     {
         glm::mat4 viewMat = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -10.0f));
         glm::mat4 projMat = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 100.0f);
@@ -120,34 +122,34 @@ void CubesExistants::draw(const glimac::TrackballCamera & cam) {
 	glm::mat4 projMat = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 100.0f);
 	m_shader.setUniformMat4f("uViewProj", projMat *cam.getViewMatrix());
 
-	//m_shader.setUniform1i("ucolor", i);
 
 	// Draw call
-	//GLCall(glDrawElements(GL_TRIANGLES, std::size(cubeData::indices), GL_UNSIGNED_SHORT, (void*)0));
 	glDrawElementsInstanced(GL_TRIANGLES, std::size(cubeData::indices), GL_UNSIGNED_SHORT, 0, positionCubesExistants.size());
 }
 
 
-void CubesExistants::creerUnCube(glm::vec3 coordonees) {
-	
+void CubesExistants::creerUnCube(glm::vec3 coordonees, glm::vec4 couleurs) {
+
 	// On gere la position du cube créé
 
 	positionCubesExistants.push_back(coordonees);
 	// on le bind pour que la ligne suivante s'applique bien à ce buffer ci
 	glBindBuffer(GL_ARRAY_BUFFER, vbPositionsCubesID);
 	// on envoie toutes nos données au GPU
-	glBufferData(GL_ARRAY_BUFFER, positionCubesExistants.size()*sizeof(glm::vec3), &positionCubesExistants[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, positionCubesExistants.size() * sizeof(glm::vec3), &positionCubesExistants[0], GL_STATIC_DRAW);
 	// on unbind
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	// On gère la couleur du cube créé 
-
-	//couleursCubesExistants.push_back(couleurs);
-	//glBindBuffer(GL_ARRAY_BUFFER, vbPositionsCubesID);
-	//// on envoie toutes nos données au GPU
-	//glBufferData(GL_ARRAY_BUFFER, positionCubesExistants.size() * sizeof(glm::vec3), &positionCubesExistants[0], GL_STATIC_DRAW);
-	//// on unbind
-	//glBindBuffer(GL_ARRAY_BUFFER, 0);
+	couleursCubesExistants.push_back(couleurs);
+	// on le bind pour que la ligne suivante s'applique bien à ce buffer ci
+	glBindBuffer(GL_ARRAY_BUFFER, vbCouleursCubesID);
+	// on envoie toutes nos données au GPU
+	glBufferData(GL_ARRAY_BUFFER, couleursCubesExistants.size() * sizeof(glm::vec4), &couleursCubesExistants[0], GL_STATIC_DRAW);
+	// on unbind
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 }
+
+
 

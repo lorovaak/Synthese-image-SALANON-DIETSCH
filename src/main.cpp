@@ -37,14 +37,14 @@ int main(int argc, char* argv[]) {
 	CubesExistants cubesExistants;
 
 	// sol état initial du monde 3 couches de blocs de même couleur
-for (int x = -(nbCubesLigne / 2); x < nbCubesLigne / 2; x++) {
-	for (int y = -(3 / 2); y < 3 / 2; y++) {
-		for (int z = -(nbCubesLigne / 2); z < nbCubesLigne / 2; z++) {
-			cubesExistants.creerUnCube(glm::vec3(x, y, z));
+	for (int x = -(nbCubesLigne / 2); x < nbCubesLigne / 2; x++) {
+		for (int y = -(3 / 2); y < 3 / 2; y++) {
+			for (int z = -(nbCubesLigne / 2); z < nbCubesLigne / 2; z++) {
+				cubesExistants.creerUnCube(glm::vec3(x, y, z),glm::vec4( 0.f, 1.f, 0.f, 1.f));
+			}
 		}
 	}
-}
-
+	
 	//application loop
 	while (app.isRunning()) {
 		SDL_Event e;

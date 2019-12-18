@@ -11,15 +11,16 @@ public:
     CubesExistants();
     ~CubesExistants();
 	void draw(const glimac::TrackballCamera& cam);
-    void draw();
-	void creerUnCube(glm::vec3 coordonees);
+	void creerUnCube(glm::vec3 coordonees, glm::vec4 couleurs);
 
 public:
 	std::vector<glm::vec3> positionCubesExistants;
+	std::vector<glm::vec4> couleursCubesExistants;
 
 private:
     unsigned int m_vao;
     unsigned int m_ib;
     Shader m_shader;
 	GLuint vbPositionsCubesID;
+	GLuint vbCouleursCubesID;
 };
