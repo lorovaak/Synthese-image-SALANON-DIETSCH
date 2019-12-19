@@ -53,31 +53,28 @@ int main(int argc, char* argv[]) {
 	while (app.isRunning()) {
 		SDL_Event e;
 		while (SDL_PollEvent(&e)) {
+
 			switch (e.type) {
 			case SDL_QUIT:
-				app.exit();
-				break;
+			app.exit();
+			break;
 
-				/* Touche clavier */
-			case SDL_KEYDOWN:
+			// Touche clavier 
+			case SDL_MOUSEWHEEL:
 
-				if (e.key.keysym.sym == SDLK_z
-					|| e.key.keysym.sym == SDLK_UP) {
-					std::cout << "Z or UP pressed" << std::endl;
-					camera.moveFront(zoom);
-				}
-				else if (e.key.keysym.sym == SDLK_s
-					|| e.key.keysym.sym == SDLK_DOWN) {
-					std::cout << "S or DOWN pressed" << std::endl;
-					camera.moveFront(-zoom);
-				}
-				break;
+			if (e.wheel.y > 0) {
+				std::cout << "mouse wheel" << std::endl;
+				camera.moveFront(zoom);
+			}
+			else if (e.wheel.y < 0) {
+				std::cout << "mouse wheel" << std::endl;
+				camera.moveFront(-zoom);
+			}
+			break;
 
 
 			case SDL_MOUSEMOTION:
 
-				//std::cout << "Mouse move: ";
-				//std::cout << e.motion.xrel << " | " << e.motion.yrel << std::endl;
 				if (e.motion.xrel != 0) {
 					camera.rotateRight(float(e.motion.xrel) * speed);
 				}
@@ -85,7 +82,37 @@ int main(int argc, char* argv[]) {
 					camera.rotateLeft(float(e.motion.yrel) * speed);
 				}
 
+			break;
+
+			case SDL_KEYDOWN:
+
+				if (e.key.keysym.sym == SDLK_z) {
+					std::cout << "Z pressed" << std::endl;
+					curseur.move_y(1);
+				}
+				else if (e.key.keysym.sym == SDLK_s) {
+					std::cout << "S pressed" << std::endl;
+					curseur.move_y(-1);
+				}
+				else if (e.key.keysym.sym == SDLK_q) {
+					std::cout << "Q pressed" << std::endl;
+					curseur.move_x(-1);
+				}
+				else if (e.key.keysym.sym == SDLK_d) {
+					std::cout << "D pressed" << std::endl;
+					curseur.move_x(1);
+				}
+				else if (e.key.keysym.sym == SDLK_a) {
+					std::cout << "U pressed" << std::endl;
+					curseur.move_z(-1);
+				}
+				else if (e.key.keysym.sym == SDLK_e) {
+					std::cout << "J pressed" << std::endl;
+					curseur.move_z(1);
+				}
 				break;
+
+
 			default:
 				break;
 			}

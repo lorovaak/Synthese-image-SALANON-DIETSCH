@@ -11,6 +11,9 @@ class Curseur {
 	public:
 		Curseur();
 		~Curseur();
+		void move_x(int i);
+		void move_y(int i);
+		void move_z(int i);
 
 	public:
 		CubesExistants cubeCurseur;
