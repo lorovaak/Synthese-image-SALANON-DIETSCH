@@ -127,12 +127,8 @@ void CubesExistants::draw(const glimac::TrackballCamera & cam) {
 	glDrawElementsInstanced(GL_TRIANGLES, std::size(cubeData::indices), GL_UNSIGNED_SHORT, 0, positionCubesExistants.size());
 }
 
-
-void CubesExistants::creerUnCube(glm::vec3 coordonees, glm::vec4 couleurs) {
-
-	// On gere la position du cube créé
-
-	positionCubesExistants.push_back(coordonees);
+void CubesExistants::updateGPU() {
+	
 	// on le bind pour que la ligne suivante s'applique bien à ce buffer ci
 	glBindBuffer(GL_ARRAY_BUFFER, vbPositionsCubesID);
 	// on envoie toutes nos données au GPU
@@ -140,16 +136,45 @@ void CubesExistants::creerUnCube(glm::vec3 coordonees, glm::vec4 couleurs) {
 	// on unbind
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	// On gère la couleur du cube créé 
-	couleursCubesExistants.push_back(couleurs);
 	// on le bind pour que la ligne suivante s'applique bien à ce buffer ci
 	glBindBuffer(GL_ARRAY_BUFFER, vbCouleursCubesID);
 	// on envoie toutes nos données au GPU
 	glBufferData(GL_ARRAY_BUFFER, couleursCubesExistants.size() * sizeof(glm::vec4), &couleursCubesExistants[0], GL_STATIC_DRAW);
 	// on unbind
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
 }
 
+void CubesExistants::creerUnCube(glm::vec3 coordonees, glm::vec4 couleurs) {
+	// On gere la position du cube créé
+	positionCubesExistants.push_back(coordonees);
+
+	// On gère la couleur du cube créé 
+	couleursCubesExistants.push_back(couleurs);
+
+	// mise à jour du GPU
+	updateGPU();
+}
+
+void CubesExistants::déplacerCube(glm::vec3 positionActuelle, glm::vec3 nouvellePosition) {
+	int indice = indiceCube(positionActuelle);
+	positionCubesExistants[indice]=nouvellePosition;
+	updateGPU();
+}
+
+void CubesExistants::supprimerCube(const glm::vec3 position) {
+	int indiceCubeSupp = indiceCube(position);
+	int indiceDernier = positionCubesExistants.size()-1;
+	std::swap(indiceCubeSupp, indiceDernier);
+	updateGPU();
+}
+
+int CubesExistants::indiceCube(const glm::vec3 position) {
+	for (int i = 0; i < positionCubesExistants.size(); ++i) {
+		if(glm::length(position-positionCubesExistants[i]) < 0.1f){
+			return i;
+		}
+	}
+	return -1;
+}
 
 
