@@ -24,7 +24,7 @@ public:
 
     bool isRunning() const;
     void exit();
-	void onLoopIteration();
+	void onLoopIteration(CubesExistants& cubesExistants, Curseur& curseur);
 
 
 
@@ -35,8 +35,10 @@ public :
 	SDL_Window* m_window;
 	SDL_GLContext m_glContext;
 	bool m_bShowImGUIDemoWindow;
+	glm::vec4 couleurDefaut;
 
 private:
     static bool m_instanciated;
     bool m_running;
+
 };

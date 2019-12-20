@@ -184,7 +184,3 @@ void CubesExistants::changeCouleur(glm::vec3 cubePosition, glm::vec4 nouvelleCou
 		updateGPU();
 	}
 }
-
-void CubesExistants::cubeExiste(glm::vec3 position) {
-	
-}

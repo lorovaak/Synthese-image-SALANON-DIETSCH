@@ -45,7 +45,7 @@ int main(int argc, char* argv[]) {
 
 	// sol état initial du monde 3 couches de blocs de même couleur
 	for (int x = -(nbCubesLigne / 2); x < nbCubesLigne / 2; x++) {
-		for (int y = -(3 / 2); y < 3 / 2; y++) {
+		for (int y = -(3.0 / 2); y < 3.0 / 2; y++) {
 			for (int z = -(nbCubesLigne / 2); z < nbCubesLigne / 2; z++) {
 				cubesExistants.creerUnCube(glm::vec3(x, y, z),glm::vec4( 1.f, 0.f, 0.f, 0.1f));
 			}
@@ -65,12 +65,15 @@ int main(int argc, char* argv[]) {
 	ImGui_ImplSDL2_InitForOpenGL(app.m_window, app.m_glContext);
 	ImGui_ImplOpenGL3_Init(glslVersion);
 	ImGui::StyleColorsClassic();
+
 	
 	//application loop
 	while (app.isRunning()) {
 
+
 		SDL_Event e;
 		while (SDL_PollEvent(&e)) {
+			ImGui_ImplSDL2_ProcessEvent(&e);
 
 			switch (e.type) {
 			case SDL_QUIT:
@@ -90,17 +93,20 @@ int main(int argc, char* argv[]) {
 			}
 			break;
 
-
+			
 			case SDL_MOUSEMOTION:
-
-				if (e.motion.xrel != 0) {
-					camera.rotateRight(float(e.motion.xrel) * speed);
+				if (SDL_GetMouseState(NULL, NULL) && SDL_BUTTON(SDL_BUTTON_RIGHT)) {
+					if (e.motion.xrel != 0) {
+						camera.rotateRight(float(e.motion.xrel) * speed);
+					}
+					if (e.motion.yrel != 0) {
+						camera.rotateLeft(float(e.motion.yrel) * speed);
+					}
 				}
-				if (e.motion.yrel != 0) {
-					camera.rotateLeft(float(e.motion.yrel) * speed);
-				}
-
 			break;
+
+
+			
 
 			case SDL_KEYDOWN:
 
@@ -128,10 +134,7 @@ int main(int argc, char* argv[]) {
 					std::cout << "J pressed" << std::endl;
 					curseur.move_z(1);
 				}
-				else if(e.key.keysym.sym == SDLK_c){
-					cubesExistants.changeCouleur(curseur.curseurPosition,glm::vec4(0,1,0,1));
 
-				}
 				break;
 
 			default:
@@ -146,8 +149,8 @@ int main(int argc, char* argv[]) {
 
 		app.beginFrame();
 
-		app.onLoopIteration();
-		curseur.cubeCurseur.draw(camera);
+		app.onLoopIteration(cubesExistants, curseur);
+		curseur.draw(camera);
 		cubesExistants.draw(camera);
 
 		app.endFrame();

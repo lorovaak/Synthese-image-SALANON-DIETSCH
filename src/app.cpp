@@ -9,10 +9,13 @@
 
 bool App::m_instanciated = false;
 
-App::App() {
+App::App() 
+	:couleurDefaut(0, 0, 0, 1)
+{
     assert(!m_instanciated && "App already created !");
 	m_instanciated = true;
 	m_bShowImGUIDemoWindow = false;
+	//couleurDefaut(0, 0, 0, 1);
 
     spdlog::set_pattern("[%l] %^ %v %$");
 
@@ -95,14 +98,33 @@ void App::initSDL() {
 	}
 }
 
-void App::onLoopIteration() {
+void App::onLoopIteration(CubesExistants& cubesExistants, Curseur& curseur) {
 	// C'est la qu'on met tout le code qui se repete a chaque frame
 
 	// ImGui windows
-	ImGui::Begin("Debug");
+	ImGui::Begin("Menu");
+
+	if (ImGui::Button("Create cube"))
+		// DoSomething create a cube at cursor position
+	ImGui::SameLine();
+
+	if (ImGui::Button("Extrude"))
+		// DoSomething add a cube on top of the column where cursor is
+	ImGui::SameLine();
+	if (ImGui::Button("Dig"))
+		// DoSomething delete a cube on top of the column where cursor is
+	ImGui::SameLine();
+	ImGui::ColorEdit4("Couleur", (float*)&couleurDefaut);
+	if (ImGui::Button("Modifier la couleur")) {
+		cubesExistants.changeCouleur(curseur.curseurPosition, couleurDefaut);
+	}
+	ImGui::SameLine();
+
+
 	ImGui::Checkbox("Show Demo Window", &m_bShowImGUIDemoWindow);
-	ImGui::Text("Application average %.1f FPS", ImGui::GetIO().Framerate);
+
 	ImGui::End();
+	
 
 	if (m_bShowImGUIDemoWindow) // Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
 		ImGui::ShowDemoWindow(&m_bShowImGUIDemoWindow);
