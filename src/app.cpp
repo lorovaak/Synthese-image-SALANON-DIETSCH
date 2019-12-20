@@ -104,9 +104,17 @@ void App::onLoopIteration(CubesExistants& cubesExistants, Curseur& curseur) {
 	// ImGui windows
 	ImGui::Begin("Menu");
 
-	if (ImGui::Button("Create cube"))
-		// DoSomething create a cube at cursor position
+	if (ImGui::Button("Create cube")) 
+	{
+		cubesExistants.creerUnCube(curseur.curseurPosition, couleurDefaut);
+	}
 	ImGui::SameLine();
+
+	if (ImGui::Button("Delete cube"))
+	{
+		cubesExistants.supprimerCube(curseur.curseurPosition);
+	}
+		ImGui::SameLine();
 
 	if (ImGui::Button("Extrude"))
 		// DoSomething add a cube on top of the column where cursor is
@@ -121,7 +129,7 @@ void App::onLoopIteration(CubesExistants& cubesExistants, Curseur& curseur) {
 	ImGui::SameLine();
 
 
-	ImGui::Checkbox("Show Demo Window", &m_bShowImGUIDemoWindow);
+	// ImGui::Checkbox("Show Demo Window", &m_bShowImGUIDemoWindow);
 
 	ImGui::End();
 	

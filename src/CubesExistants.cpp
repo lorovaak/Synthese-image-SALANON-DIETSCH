@@ -163,8 +163,8 @@ void CubesExistants::déplacerCube(glm::vec3 positionActuelle, glm::vec3 nouvelle
 
 void CubesExistants::supprimerCube(const glm::vec3 position) {
 	int indiceCubeSupp = indiceCube(position);
-	int indiceDernier = positionCubesExistants.size()-1;
-	std::swap(indiceCubeSupp, indiceDernier);
+	// int indiceDernier = positionCubesExistants.size()-1;
+	positionCubesExistants.erase(positionCubesExistants.begin() + indiceCubeSupp);
 	updateGPU();
 }
 

@@ -38,7 +38,7 @@ int main(int argc, char* argv[]) {
 	float speed = 1.0f;
 
 	// création des cubes
-	const int nbCubesLigne = 10;
+	const int nbCubesLigne = 30;
 	const int nbCubesMonde = nbCubesLigne * nbCubesLigne * nbCubesLigne;
 
 	CubesExistants cubesExistants;
@@ -47,7 +47,7 @@ int main(int argc, char* argv[]) {
 	for (int x = -(nbCubesLigne / 2); x < nbCubesLigne / 2; x++) {
 		for (int y = -(3.0 / 2); y < 3.0 / 2; y++) {
 			for (int z = -(nbCubesLigne / 2); z < nbCubesLigne / 2; z++) {
-				cubesExistants.creerUnCube(glm::vec3(x, y, z),glm::vec4( 1.f, 0.f, 0.f, 0.1f));
+				cubesExistants.creerUnCube(glm::vec3(x, y, z),glm::vec4( 0.f, 0.8, 0.f, 1.f));
 			}
 		}
 	}
