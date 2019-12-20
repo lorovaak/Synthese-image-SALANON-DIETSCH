@@ -57,14 +57,7 @@ int main(int argc, char* argv[]) {
 	//creation du curseur
 	Curseur curseur;
 
-	////TEST
-	glm::vec3 cubeachanger(1, 1, 1);
-	glm::vec4 nouvellecouleur(0, 1, 0, 1);
-	cubesExistants.changeCouleur(cubeachanger, nouvellecouleur);
-
-
-
-
+	
 	//initialisation de imgui
 	const char* glslVersion = "#version 130";
 	IMGUI_CHECKVERSION();
@@ -134,6 +127,10 @@ int main(int argc, char* argv[]) {
 				else if (e.key.keysym.sym == SDLK_e) {
 					std::cout << "J pressed" << std::endl;
 					curseur.move_z(1);
+				}
+				else if(e.key.keysym.sym == SDLK_c){
+					cubesExistants.changeCouleur(curseur.curseurPosition,glm::vec4(0,1,0,1));
+
 				}
 				break;
 

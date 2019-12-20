@@ -25,7 +25,8 @@ public:
     bool isRunning() const;
     void exit();
 	void onLoopIteration();
-	void handleSDLEvents(Curseur& curseur);
+
+
 
 private:
     void initSDL();

@@ -17,8 +17,6 @@ class Curseur {
 
 	public:
 		CubesExistants cubeCurseur;
-
-	private:
 		glm::vec3 curseurPosition;
 		glm::vec4 curseurCouleur;
 

@@ -178,7 +178,13 @@ int CubesExistants::indiceCube(const glm::vec3 position) {
 }
 
 void CubesExistants::changeCouleur(glm::vec3 cubePosition, glm::vec4 nouvelleCouleur) {
-	int indice = indiceCube(cubePosition);
-	couleursCubesExistants[indice] = nouvelleCouleur;
-	updateGPU();
+	if (indiceCube(cubePosition)!=-1) {
+		int indice = indiceCube(cubePosition);
+		couleursCubesExistants[indice] = nouvelleCouleur;
+		updateGPU();
+	}
+}
+
+void CubesExistants::cubeExiste(glm::vec3 position) {
+	
 }
