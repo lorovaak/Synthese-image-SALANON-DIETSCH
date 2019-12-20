@@ -10,7 +10,7 @@
 bool App::m_instanciated = false;
 
 App::App() 
-	:couleurDefaut(0, 0, 0, 1)
+	:couleurDefaut(253.f/255, 187.f/255, 209.f/255, 1)
 {
     assert(!m_instanciated && "App already created !");
 	m_instanciated = true;

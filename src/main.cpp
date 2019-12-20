@@ -38,16 +38,24 @@ int main(int argc, char* argv[]) {
 	float speed = 1.0f;
 
 	// création des cubes
-	const int nbCubesLigne = 30;
+	const int nbCubesLigne = 50;
 	const int nbCubesMonde = nbCubesLigne * nbCubesLigne * nbCubesLigne;
 
 	CubesExistants cubesExistants;
 
 	// sol état initial du monde 3 couches de blocs de même couleur
 	for (int x = -(nbCubesLigne / 2); x < nbCubesLigne / 2; x++) {
-		for (int y = -(3.0 / 2); y < 3.0 / 2; y++) {
+		for (int y = -(3.0 / 2); y < 3.0 / 2 - 1; y++) {
 			for (int z = -(nbCubesLigne / 2); z < nbCubesLigne / 2; z++) {
-				cubesExistants.creerUnCube(glm::vec3(x, y, z),glm::vec4( 0.f, 0.8, 0.f, 1.f));
+				cubesExistants.creerUnCube(glm::vec3(x, y, z),glm::vec4(76.f/255, 9.f/255, 9.f/255, 1.f));
+			}
+		}
+	}
+
+	for (int x = -(nbCubesLigne / 2); x < nbCubesLigne / 2; x++) {
+		for (int y = 3.0 / 2 - 1; y < 3.0 / 2; y++) {
+			for (int z = -(nbCubesLigne / 2); z < nbCubesLigne / 2; z++) {
+				cubesExistants.creerUnCube(glm::vec3(x, y, z), glm::vec4(125.f/255, 188.f/255, 123.f/255, 1.f));
 			}
 		}
 	}

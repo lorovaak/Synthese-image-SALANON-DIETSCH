@@ -119,7 +119,7 @@ void CubesExistants::draw(const glimac::TrackballCamera & cam) {
 	m_shader.bind();
 
 	// Update model mat uniform
-	glm::mat4 projMat = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 100.0f);
+	glm::mat4 projMat = glm::infinitePerspective(glm::radians(45.0f), 1.0f, 0.1f);
 	m_shader.setUniformMat4f("uViewProj", projMat *cam.getViewMatrix());
 
 
