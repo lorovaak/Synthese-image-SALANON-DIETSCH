@@ -35,6 +35,8 @@ endif()
 # ------------------------------ BUILD IF NEEDED ------------------------------
 
 add_library(GLAD STATIC "lib/glad/src/glad.c")
+file(GLOB_RECURSE IMGUI_SOURCES lib/imgui/*)
+add_library(IMGUI STATIC ${IMGUI_SOURCES})
 
 # /////////////////////////////////////////////////////////////////////////////
 # ///////////////////////////////// INCLUDES //////////////////////////////////
@@ -44,6 +46,7 @@ include_directories(
     ${OPENGL_INCLUDE_DIR}
     ${SDL2_INCLUDE_DIRS}
     lib/glad/include
+	lib/imgui
     lib
     src
 )
@@ -59,6 +62,7 @@ target_link_libraries(
     ${OPENGL_LIBRARIES}
     ${SDL2_LIBRARIES}
     GLAD
+	IMGUI
 )
 
 if (UNIX)

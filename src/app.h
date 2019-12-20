@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SDL2/SDL.h>
+#include <Curseur.h>
 
 /**
  * @brief Base root of the app
@@ -23,13 +24,18 @@ public:
 
     bool isRunning() const;
     void exit();
+	void onLoopIteration();
+	void handleSDLEvents(Curseur& curseur);
 
 private:
     void initSDL();
 
+public :
+	SDL_Window* m_window;
+	SDL_GLContext m_glContext;
+	bool m_bShowImGUIDemoWindow;
+
 private:
-    SDL_Window* m_window;
-    SDL_GLContext m_glContext;
     static bool m_instanciated;
     bool m_running;
 };

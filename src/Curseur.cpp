@@ -12,13 +12,15 @@ Curseur::~Curseur()
 {
 }
 
-void Curseur::move_x(int i) {
+void Curseur::move_x(int i)
+{
 	glm::vec3 anciennePosition = curseurPosition;
 	curseurPosition.x += i;
 	cubeCurseur.déplacerCube(anciennePosition, curseurPosition);
 }
 
-void Curseur::move_y(int i) {
+void Curseur::move_y(int i)
+{
 	glm::vec3 anciennePosition = curseurPosition;
 	curseurPosition.y += i;
 	cubeCurseur.déplacerCube(anciennePosition, curseurPosition);

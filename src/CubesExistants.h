@@ -16,6 +16,7 @@ public:
 	void supprimerCube(const glm::vec3 position);
 	int indiceCube(const glm::vec3 position);
 	void updateGPU();
+	void changeCouleur(glm::vec3 cubePosition, glm::vec4 nouvelleCouleur);
 
 public:
 	std::vector<glm::vec3> positionCubesExistants;

@@ -6,14 +6,20 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include <imgui/imgui.h>
+#include <imgui/imgui_impl_sdl.h>
+#include <imgui/imgui_impl_opengl3.h>
+
 #include "app.h"
 #include "CubesExistants.h"
 #include "TrackballCamera.hpp"
 #include "Curseur.h"
 
 
+
 int main(int argc, char* argv[]) {
 	App app;
+
 	//activation de la transparence
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -46,11 +52,30 @@ int main(int argc, char* argv[]) {
 		}
 	}
 
+	cubesExistants.creerUnCube(glm::vec3(1, 1, 1), glm::vec4(1.f, 0.f, 0.f, 1.f));
+
 	//creation du curseur
 	Curseur curseur;
+
+	////TEST
+	glm::vec3 cubeachanger(1, 1, 1);
+	glm::vec4 nouvellecouleur(0, 1, 0, 1);
+	cubesExistants.changeCouleur(cubeachanger, nouvellecouleur);
+
+
+
+
+	//initialisation de imgui
+	const char* glslVersion = "#version 130";
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGui_ImplSDL2_InitForOpenGL(app.m_window, app.m_glContext);
+	ImGui_ImplOpenGL3_Init(glslVersion);
+	ImGui::StyleColorsClassic();
 	
 	//application loop
 	while (app.isRunning()) {
+
 		SDL_Event e;
 		while (SDL_PollEvent(&e)) {
 
@@ -112,7 +137,6 @@ int main(int argc, char* argv[]) {
 				}
 				break;
 
-
 			default:
 				break;
 			}
@@ -125,11 +149,20 @@ int main(int argc, char* argv[]) {
 
 		app.beginFrame();
 
+		app.onLoopIteration();
 		curseur.cubeCurseur.draw(camera);
 		cubesExistants.draw(camera);
 
 		app.endFrame();
+
+
 	}
+
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplSDL2_Shutdown();
+	ImGui::DestroyContext();
+	SDL_DestroyWindow(app.m_window);
+	SDL_Quit();
 
 	return 0;
 }

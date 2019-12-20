@@ -3,12 +3,16 @@
 #include <glad/glad.h>
 #include <spdlog/spdlog.h>
 #include <debug_break/debug_break.h>
+#include <imgui/imgui.h>
+#include <imgui/imgui_impl_sdl.h>
+#include <imgui/imgui_impl_opengl3.h>
 
 bool App::m_instanciated = false;
 
 App::App() {
     assert(!m_instanciated && "App already created !");
 	m_instanciated = true;
+	m_bShowImGUIDemoWindow = false;
 
     spdlog::set_pattern("[%l] %^ %v %$");
 
@@ -25,9 +29,14 @@ App::~App() {
 
 void App::beginFrame() const {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	ImGui_ImplOpenGL3_NewFrame();
+	ImGui_ImplSDL2_NewFrame(m_window);
+	ImGui::NewFrame();
 }
 
 void App::endFrame() const {
+	ImGui::Render();
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	SDL_GL_SwapWindow(m_window);
 }
 
@@ -86,3 +95,16 @@ void App::initSDL() {
 	}
 }
 
+void App::onLoopIteration() {
+	// C'est la qu'on met tout le code qui se repete a chaque frame
+
+	// ImGui windows
+	ImGui::Begin("Debug");
+	ImGui::Checkbox("Show Demo Window", &m_bShowImGUIDemoWindow);
+	ImGui::Text("Application average %.1f FPS", ImGui::GetIO().Framerate);
+	ImGui::End();
+
+	if (m_bShowImGUIDemoWindow) // Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
+		ImGui::ShowDemoWindow(&m_bShowImGUIDemoWindow);
+
+}
