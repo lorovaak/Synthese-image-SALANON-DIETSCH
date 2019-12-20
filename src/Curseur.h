@@ -14,6 +14,7 @@ class Curseur {
 		void move_x(int i);
 		void move_y(int i);
 		void move_z(int i);
+		void draw(const glimac::TrackballCamera& cam);
 
 	public:
 		CubesExistants cubeCurseur;
