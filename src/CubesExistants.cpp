@@ -3,7 +3,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "gl-exception.h"
 
-namespace cubeData {
+namespace cubeData 
+{
+
     //    v6----- v5
     //   /|      /|
     //  v1------v0|
@@ -11,6 +13,7 @@ namespace cubeData {
     //  | |v7---|-|v4
     //  |/      |/
     //  v2------v3
+
     const glm::vec3 positions[] = {
         // Front v0,v1,v2,v3
         glm::vec3(0.5, 0.5, 0.5), glm::vec3(-0.5, 0.5, 0.5), glm::vec3(-0.5, -0.5, 0.5), glm::vec3(0.5, -0.5, 0.5),
@@ -45,8 +48,10 @@ namespace cubeData {
     };
 }
 
+// constructeur cubes existants
+
 CubesExistants::CubesExistants()
-    : m_vao(0), m_ib(0), m_shader("res/shaders/basic.vert", "res/shaders/basic.frag")
+    : m_vao(0), m_ib(0), m_shader("res/shaders/basic.vert", "res/shaders/basic.frag") // initialisation des parametres
 {
     // ------------------ Vertex Buffer
     unsigned int posVB;
@@ -56,7 +61,6 @@ CubesExistants::CubesExistants()
         GLCall(glBufferData(GL_ARRAY_BUFFER, sizeof(cubeData::positions), cubeData::positions, GL_STATIC_DRAW));
         GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
     }
-
 
 	// on crée le buffer
 	glGenBuffers(1, &vbPositionsCubesID);
@@ -107,25 +111,31 @@ CubesExistants::CubesExistants()
     m_shader.unbind();
 }
 
-CubesExistants::~CubesExistants()
+// destructeur cubes existants
+
+CubesExistants::~CubesExistants() 
 {
 }
 
-//void CubesExistants::draw(int i,const glimac::TrackballCamera &cam) {
-void CubesExistants::draw(const glimac::TrackballCamera & cam) {
+// methode draw 
+
+void CubesExistants::draw(const glimac::TrackballCamera & cam) 
+{
 	// Bind
 	GLCall(glBindVertexArray(m_vao));
 	GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ib));
 	m_shader.bind();
 
 	// Update model mat uniform
-	glm::mat4 projMat = glm::infinitePerspective(glm::radians(45.0f), 1.0f, 0.1f);
+	glm::mat4 projMat = glm::infinitePerspective(glm::radians(45.0f), 1.0f, 0.1f); // camera a l'infini
 	m_shader.setUniformMat4f("uViewProj", projMat *cam.getViewMatrix());
 
 
 	// Draw call
 	glDrawElementsInstanced(GL_TRIANGLES, std::size(cubeData::indices), GL_UNSIGNED_SHORT, 0, positionCubesExistants.size());
 }
+
+// methode update GPU 
 
 void CubesExistants::updateGPU() {
 	
@@ -144,43 +154,46 @@ void CubesExistants::updateGPU() {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void CubesExistants::creerUnCube(glm::vec3 coordonees, glm::vec4 couleurs) {
-	// On gere la position du cube créé
-	positionCubesExistants.push_back(coordonees);
+// Methodes de gestion des cubes 
 
-	// On gère la couleur du cube créé 
-	couleursCubesExistants.push_back(couleurs);
+    void CubesExistants::creerUnCube(glm::vec3 coordonees, glm::vec4 couleurs) {
+	    // On gere la position du cube créé
+	    positionCubesExistants.push_back(coordonees);
 
-	// mise à jour du GPU
-	updateGPU();
-}
+	    // On gère la couleur du cube créé 
+	    couleursCubesExistants.push_back(couleurs);
 
-void CubesExistants::déplacerCube(glm::vec3 positionActuelle, glm::vec3 nouvellePosition) {
-	int indice = indiceCube(positionActuelle);
-	positionCubesExistants[indice]=nouvellePosition;
-	updateGPU();
-}
+	    // mise à jour du GPU
+	    updateGPU();
+    }
 
-void CubesExistants::supprimerCube(const glm::vec3 position) {
-	int indiceCubeSupp = indiceCube(position);
-	// int indiceDernier = positionCubesExistants.size()-1;
-	positionCubesExistants.erase(positionCubesExistants.begin() + indiceCubeSupp);
-	updateGPU();
-}
 
-int CubesExistants::indiceCube(const glm::vec3 position) {
-	for (int i = 0; i < positionCubesExistants.size(); ++i) {
-		if(glm::length(position-positionCubesExistants[i]) < 0.1f){
-			return i;
-		}
-	}
-	return -1;
-}
+    void CubesExistants::déplacerCube(glm::vec3 positionActuelle, glm::vec3 nouvellePosition) {
+	    int indice = indiceCube(positionActuelle);
+	    positionCubesExistants[indice]=nouvellePosition;
+	    updateGPU();
+    }
 
-void CubesExistants::changeCouleur(glm::vec3 cubePosition, glm::vec4 nouvelleCouleur) {
-	if (indiceCube(cubePosition)!=-1) {
-		int indice = indiceCube(cubePosition);
-		couleursCubesExistants[indice] = nouvelleCouleur;
-		updateGPU();
-	}
-}
+    void CubesExistants::supprimerCube(const glm::vec3 position) {
+	    int indiceCubeSupp = indiceCube(position);
+	    // int indiceDernier = positionCubesExistants.size()-1;
+	    positionCubesExistants.erase(positionCubesExistants.begin() + indiceCubeSupp);
+	    updateGPU();
+    }
+
+    int CubesExistants::indiceCube(const glm::vec3 position) {
+	    for (int i = 0; i < positionCubesExistants.size(); ++i) {
+		    if(glm::length(position-positionCubesExistants[i]) < 0.1f){
+			    return i;
+		    }
+	    }
+	    return -1; 
+    }
+
+    void CubesExistants::changeCouleur(glm::vec3 cubePosition, glm::vec4 nouvelleCouleur) {
+	    if (indiceCube(cubePosition)!=-1) {
+		    int indice = indiceCube(cubePosition);
+		    couleursCubesExistants[indice] = nouvelleCouleur;
+		    updateGPU();
+	    }
+    }

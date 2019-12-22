@@ -6,10 +6,9 @@
 namespace glimac {
 
   TrackballCamera::TrackballCamera()
-    : _fDistance(-5.0f), _fAngleX(0.0f), _fAngleY(0.0f)
+    : _fDistance(-75.0f), _fAngleX(25.0f), _fAngleY(0.0f)
   {
   }
-  
   void TrackballCamera::moveFront(const float &delta) 
   {
     if ( delta > 0 && _fDistance >= -1.0f ) return;
