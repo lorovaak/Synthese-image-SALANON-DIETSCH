@@ -211,37 +211,11 @@ void CubesExistants::updateGPU() {
 	}
 
 	void CubesExistants::creuser(glm::vec3 cubePosition, glm::vec4 couleurCube) {
-		if (indiceCube(cubePosition) != -1) {
-			int i = cubePosition.y;
-			while (indiceCube(cubePosition) > -1) {
-				cubePosition.y += 1;
-			}
-			cubePosition.y -= 1;
-			std::cout << "cube du haut" << cubePosition.y << std::endl;
-
-			// chercher la position du cube de la même couleur le plus haut
-			glm::vec4 couleurDuHaut = couleursCubesExistants[indiceCube(cubePosition)];
-			while (couleurDuHaut!=couleurCube && i<=cubePosition.y) {
-				cubePosition.y -= 1;
-			}
-			std::cout << "couleur du haut" << cubePosition.y << std::endl;
-			supprimerCube(cubePosition);
-			updateGPU();
+		while (indiceCube(cubePosition) > -1) {
+			cubePosition.y +=1;
+			std::cout << cubePosition.y << std::endl;
 		}
+		cubePosition.y -= 1;
+		supprimerCube(cubePosition);
+		updateGPU();
 	}
-
-	// NE PAS SUPPRIMER
-
-	//void CubesExistants::creuser(glm::vec3 cubePosition, glm::vec4 couleurCube) {
-	//	while (indiceCube(cubePosition) > -1) {
-	//		cubePosition.y +=1;
-	//		std::cout << cubePosition.y << std::endl;
-	//	}
-	//	cubePosition.y -= 1;
-
-	//	glm::vec4 couleurDuHaut = couleursCubesExistants[indiceCube(cubePosition)];
-	//	if(couleurCube==couleurDuHaut){
-	//		supprimerCube(cubePosition);
-	//	}
-	//	updateGPU();
-	//}
