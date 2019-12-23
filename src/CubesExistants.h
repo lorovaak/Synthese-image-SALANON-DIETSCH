@@ -17,6 +17,8 @@ public:
 	int indiceCube(const glm::vec3 position);
 	void updateGPU();
 	void changeCouleur(glm::vec3 cubePosition, glm::vec4 nouvelleCouleur);
+	void extrusion(glm::vec3 cubePosition, glm::vec4 couleurCube);
+	void creuser(glm::vec3 cubePosition, glm::vec4 couleurCube);
 
 public:
 	std::vector<glm::vec3> positionCubesExistants;

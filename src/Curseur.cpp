@@ -26,6 +26,9 @@ void Curseur::move_y(int i)
 	glm::vec3 anciennePosition = curseurPosition;
 	curseurPosition.y += i;
 	cubeCurseur.déplacerCube(anciennePosition, curseurPosition);
+
+	//test
+	std::cout << curseurPosition.y << std::endl;
 }
 
 void Curseur::move_z(int i)

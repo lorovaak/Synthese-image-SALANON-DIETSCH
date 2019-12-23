@@ -6,6 +6,7 @@
 #include <imgui/imgui.h>
 #include <imgui/imgui_impl_sdl.h>
 #include <imgui/imgui_impl_opengl3.h>
+#include <iostream>
 
 bool App::m_instanciated = false;
 
@@ -104,24 +105,38 @@ void App::onLoopIteration(CubesExistants& cubesExistants, Curseur& curseur) {
 	// ImGui windows
 	ImGui::Begin("Menu");
 
-	if (ImGui::Button("Create cube")) 
+	if (ImGui::Button("Creer cube")) 
 	{
 		cubesExistants.creerUnCube(curseur.curseurPosition, couleurDefaut);
 	}
 	ImGui::SameLine();
 
-	if (ImGui::Button("Delete cube"))
+	if (ImGui::Button("Supprimer cube"))
 	{
 		cubesExistants.supprimerCube(curseur.curseurPosition);
 	}
-		ImGui::SameLine();
+	
 
-	if (ImGui::Button("Extrude"))
-		// DoSomething add a cube on top of the column where cursor is
+	if (ImGui::Button("Extruder")) {
+		glm::vec4 couleurExtrusion = couleurDefaut;
+		if (cubesExistants.indiceCube(curseur.curseurPosition) != -1) {
+			couleurExtrusion = cubesExistants.couleursCubesExistants[cubesExistants.indiceCube(curseur.curseurPosition)];
+		}
+		cubesExistants.extrusion(curseur.curseurPosition, couleurExtrusion);
+	}
 	ImGui::SameLine();
-	if (ImGui::Button("Dig"))
-		// DoSomething delete a cube on top of the column where cursor is
-	ImGui::SameLine();
+
+
+	if (ImGui::Button("Creuser")) {
+		// couleurExtrsuion = couleur du cube à la position de mon curseur
+		if (cubesExistants.indiceCube(curseur.curseurPosition) != -1) {
+			glm::vec4 couleurExtrusion2 = cubesExistants.couleursCubesExistants[cubesExistants.indiceCube(curseur.curseurPosition)];
+			cubesExistants.creuser(curseur.curseurPosition, couleurExtrusion2);
+		}
+
+		std::cout << curseur.curseurPosition.y << std::endl;
+	}
+
 	ImGui::ColorEdit4("Couleur", (float*)&couleurDefaut);
 	if (ImGui::Button("Modifier la couleur")) {
 		cubesExistants.changeCouleur(curseur.curseurPosition, couleurDefaut);
