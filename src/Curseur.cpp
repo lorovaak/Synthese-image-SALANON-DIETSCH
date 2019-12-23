@@ -18,14 +18,14 @@ void Curseur::move_x(int i)
 {
 	glm::vec3 anciennePosition = curseurPosition;
 	curseurPosition.x += i;
-	cubeCurseur.déplacerCube(anciennePosition, curseurPosition);
+	cubeCurseur.deplacerCube(anciennePosition, curseurPosition);
 }
 
 void Curseur::move_y(int i)
 {
 	glm::vec3 anciennePosition = curseurPosition;
 	curseurPosition.y += i;
-	cubeCurseur.déplacerCube(anciennePosition, curseurPosition);
+	cubeCurseur.deplacerCube(anciennePosition, curseurPosition);
 
 	//test
 	std::cout << curseurPosition.y << std::endl;
@@ -35,7 +35,7 @@ void Curseur::move_z(int i)
 {	
 	glm::vec3 anciennePosition = curseurPosition;
 	curseurPosition.z += i;
-	cubeCurseur.déplacerCube(anciennePosition, curseurPosition);
+	cubeCurseur.deplacerCube(anciennePosition, curseurPosition);
 }
 
 void Curseur::draw(const glimac::TrackballCamera& cam) {

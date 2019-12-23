@@ -12,7 +12,7 @@ public:
     ~CubesExistants();
 	void draw(const glimac::TrackballCamera& cam);
 	void creerUnCube(glm::vec3 coordonees, glm::vec4 couleurs);
-	void déplacerCube(glm::vec3 positionActuelle, glm::vec3 nouvellePosition);
+	void deplacerCube(glm::vec3 positionActuelle, glm::vec3 nouvellePosition);
 	void supprimerCube(const glm::vec3 position);
 	int indiceCube(const glm::vec3 position);
 	void updateGPU();

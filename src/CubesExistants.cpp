@@ -169,7 +169,7 @@ void CubesExistants::updateGPU() {
     }
 
 
-    void CubesExistants::déplacerCube(glm::vec3 positionActuelle, glm::vec3 nouvellePosition) {
+    void CubesExistants::deplacerCube(glm::vec3 positionActuelle, glm::vec3 nouvellePosition) {
 	    int indice = indiceCube(positionActuelle);
 	    positionCubesExistants[indice]=nouvellePosition;
 	    updateGPU();
@@ -180,6 +180,7 @@ void CubesExistants::updateGPU() {
 			int indiceCubeSupp = indiceCube(position);
 			// int indiceDernier = positionCubesExistants.size()-1;
 			positionCubesExistants.erase(positionCubesExistants.begin() + indiceCubeSupp);
+			couleursCubesExistants.erase(couleursCubesExistants.begin() + indiceCubeSupp);
 			updateGPU();
 		}
     }
