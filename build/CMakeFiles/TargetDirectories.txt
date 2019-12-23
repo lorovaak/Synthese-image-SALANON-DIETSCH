@@ -1,4 +1,0 @@
-C:/Users/USER/Documents/projet OpenGL/Synthese-image-SALANON-DIETSCH/build/CMakeFiles/GLAD.dir
-C:/Users/USER/Documents/projet OpenGL/Synthese-image-SALANON-DIETSCH/build/CMakeFiles/DIETSCH_SALANON.dir
-C:/Users/USER/Documents/projet OpenGL/Synthese-image-SALANON-DIETSCH/build/CMakeFiles/ALL_BUILD.dir
-C:/Users/USER/Documents/projet OpenGL/Synthese-image-SALANON-DIETSCH/build/CMakeFiles/ZERO_CHECK.dir
