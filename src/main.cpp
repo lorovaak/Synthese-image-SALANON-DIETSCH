@@ -15,6 +15,7 @@
 #include "CubesExistants.h"
 #include "TrackballCamera.hpp"
 #include "Curseur.h"
+#include "radialBasicFonction.hpp"
 
 //////////
 // MAIN //
@@ -74,6 +75,48 @@ int main(int argc, char* argv[]) {
 	ImGui_ImplSDL2_InitForOpenGL(app.m_window, app.m_glContext);
 	ImGui_ImplOpenGL3_Init(glslVersion);
 	ImGui::StyleColorsClassic();
+
+
+///////////////////////////
+// Radial Basic Function //
+///////////////////////////
+
+// creation des points de controle
+
+	unsigned int nbPointsControle = 4;
+
+	glm::vec3 positionCube1(13, 7, 0);
+	glm::vec3 positionCube2(-13, 7, 0);
+	glm::vec3 positionCube3(13, 5, 13);
+	glm::vec3 positionCube4(-13, 5, 13);
+
+	std::vector<glm::vec3> positionCubesControle;
+
+	positionCubesControle.push_back(positionCube1);
+	positionCubesControle.push_back(positionCube2);
+	positionCubesControle.push_back(positionCube3);
+	positionCubesControle.push_back(positionCube4);
+
+
+	// vecteur des poids 
+
+	glm::vec4 poids(-10, 10, -10, -10);
+
+	// determination des omega
+
+	find_omega(nbPointsControle, positionCubesControle, poids);
+
+	// generation du terrain A COMMENTER POUR NE PAS AVOIR DE RBF
+
+	for (int x = -(nbCubesLigne / 2); x < nbCubesLigne / 2; x++) {
+		for (int y = -(nbCubesLigne / 2) + 3; y < nbCubesLigne / 2; y++) { // +3 pour ne pas toucher au sol
+			for (int z = -(nbCubesLigne / 2); z < nbCubesLigne / 2; z++) {
+
+				gener_terrain(cubesExistants, glm::vec3(x, y, z), nbPointsControle, positionCubesControle, poids, nbCubesLigne);
+
+			}
+		}
+	}
 
 	//////////////////////
 	// application loop //
