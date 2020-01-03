@@ -47,6 +47,7 @@ include_directories(
     ${SDL2_INCLUDE_DIRS}
     lib/glad/include
 	lib/imgui
+	lib/Eigen
     lib
     src
 )
