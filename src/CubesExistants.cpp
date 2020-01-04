@@ -56,12 +56,20 @@ CubesExistants::CubesExistants()
 {
     // ------------------ Vertex Buffer
     unsigned int posVB;
-    {
-        GLCall(glGenBuffers(1, &posVB));
-        GLCall(glBindBuffer(GL_ARRAY_BUFFER, posVB));
-        GLCall(glBufferData(GL_ARRAY_BUFFER, sizeof(cubeData::positions), cubeData::positions, GL_STATIC_DRAW));
-        GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
-    }
+    
+    GLCall(glGenBuffers(1, &posVB));
+    GLCall(glBindBuffer(GL_ARRAY_BUFFER, posVB));
+    GLCall(glBufferData(GL_ARRAY_BUFFER, sizeof(cubeData::positions), cubeData::positions, GL_STATIC_DRAW));
+    GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
+
+    unsigned int normalVB;
+
+    GLCall(glGenBuffers(1, &normalVB));
+    GLCall(glBindBuffer(GL_ARRAY_BUFFER, normalVB));
+    GLCall(glBufferData(GL_ARRAY_BUFFER, sizeof(cubeData::normals), cubeData::normals, GL_STATIC_DRAW));
+    GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
+
+    
 
 	// on crée le buffer
 	glGenBuffers(1, &vbPositionsCubesID);
@@ -69,37 +77,38 @@ CubesExistants::CubesExistants()
 	
     
     // ------------------ Vertex Array
-    {
-        GLCall(glGenVertexArrays(1, &m_vao));
-        GLCall(glBindVertexArray(m_vao));
+    
+    GLCall(glGenVertexArrays(1, &m_vao));
+    GLCall(glBindVertexArray(m_vao));
 
-        // Vertex input description
-        {
-            GLCall(glEnableVertexAttribArray(0));
-            GLCall(glBindBuffer(GL_ARRAY_BUFFER, posVB));
-            GLCall(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), NULL));
-        }
+    // Vertex input description
+    GLCall(glBindBuffer(GL_ARRAY_BUFFER, posVB));
+    GLCall(glEnableVertexAttribArray(0));
+    GLCall(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0));
 
-		glBindBuffer(GL_ARRAY_BUFFER, vbPositionsCubesID);
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
-		glVertexAttribDivisor(1, 1);
+    GLCall(glBindBuffer(GL_ARRAY_BUFFER, normalVB));
+    GLCall(glEnableVertexAttribArray(1));
+    GLCall(glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0));
+    // glVertexAttribDivisor(3, 4);
 
-		glBindBuffer(GL_ARRAY_BUFFER, vbCouleursCubesID);
-		glEnableVertexAttribArray(2);
-		glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
-		glVertexAttribDivisor(2, 1);
-        
-        GLCall(glBindVertexArray(0));
-    }
+	glBindBuffer(GL_ARRAY_BUFFER, vbPositionsCubesID);
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
+	glVertexAttribDivisor(2, 1);
+
+	glBindBuffer(GL_ARRAY_BUFFER, vbCouleursCubesID);
+	glEnableVertexAttribArray(3);
+	glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
+    glVertexAttribDivisor(3, 1);
+
+    GLCall(glBindVertexArray(0));
+    
 
     // ------------------ Index buffer
-    {
-        GLCall(glGenBuffers(1, &m_ib));
-        GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ib));
-        GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(cubeData::indices), cubeData::indices, GL_STATIC_DRAW));
-        GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
-    }
+    GLCall(glGenBuffers(1, &m_ib));
+    GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ib));
+    GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(cubeData::indices), cubeData::indices, GL_STATIC_DRAW));
+    GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
 
     // ------------------ Default values for uniforms
     m_shader.bind();
@@ -131,12 +140,13 @@ void CubesExistants::draw(const glimac::TrackballCamera & cam, const glm::vec4 &
 	glm::mat4 projMat = glm::infinitePerspective(glm::radians(45.0f), 1.0f, 0.1f); // camera a l'infini
     m_shader.setUniformMat4f("uViewProj", projMat * cam.getViewMatrix());
    
-    // Light of the world (color and intensity)
+    // Light of the world (color and intensity and position)
     m_shader.setUniform4f("uLightColor", lightEffect);
+    m_shader.setUniform3f("uLightPos", 20.0f, 5.0f, 0.0f);
 
 
 	// Draw call
-	glDrawElementsInstanced(GL_TRIANGLES, std::size(cubeData::indices), GL_UNSIGNED_SHORT, 0, positionCubesExistants.size());
+    GLCall(glDrawElementsInstanced(GL_TRIANGLES, std::size(cubeData::indices), GL_UNSIGNED_SHORT, 0, positionCubesExistants.size()));
 }
 
 // methode update GPU 
