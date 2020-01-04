@@ -11,14 +11,14 @@ public:
     CubesExistants();
     ~CubesExistants();
 	void draw(const glimac::TrackballCamera& cam);
-	void creerUnCube(glm::vec3 coordonees, glm::vec4 couleurs);
-	void deplacerCube(glm::vec3 positionActuelle, glm::vec3 nouvellePosition);
-	void supprimerCube(const glm::vec3 position);
-	int indiceCube(const glm::vec3 position);
+	void CubesExistants::creerUnCube(const glm::vec3& coordonees, const glm::vec4& couleurs);
+	void CubesExistants::deplacerCube(glm::vec3& positionActuelle, glm::vec3& nouvellePosition);
+	void CubesExistants::supprimerCube(glm::vec3& position);
+	int CubesExistants::indiceCube(const glm::vec3& position);
 	void updateGPU();
-	void changeCouleur(glm::vec3 cubePosition, glm::vec4 nouvelleCouleur);
-	void extrusion(glm::vec3 cubePosition, glm::vec4 couleurCube);
-	void creuser(glm::vec3 cubePosition, glm::vec4 couleurCube);
+	void CubesExistants::changeCouleur(const glm::vec3& cubePosition, const glm::vec4& nouvelleCouleur);
+	void CubesExistants::extrusion(glm::vec3 cubePosition, const glm::vec4& couleurCube);
+	void CubesExistants::creuser(glm::vec3 cubePosition, const glm::vec4& couleurCube);
 
 public:
 	std::vector<glm::vec3> positionCubesExistants;

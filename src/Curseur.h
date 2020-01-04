@@ -11,9 +11,9 @@ class Curseur {
 	public:
 		Curseur();
 		~Curseur();
-		void move_x(int i);
-		void move_y(int i);
-		void move_z(int i);
+		void move_x(const int i);
+		void move_y(const int i);
+		void move_z(const int i);
 		void draw(const glimac::TrackballCamera& cam);
 
 	public:

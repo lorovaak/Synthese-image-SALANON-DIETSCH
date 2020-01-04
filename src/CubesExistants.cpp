@@ -157,7 +157,7 @@ void CubesExistants::updateGPU() {
 
 // Methodes de gestion des cubes 
 
-    void CubesExistants::creerUnCube(glm::vec3 coordonees, glm::vec4 couleurs) {
+    void CubesExistants::creerUnCube(const glm::vec3 &coordonees, const glm::vec4 &couleurs) {
 	    // On gere la position du cube créé
 	    positionCubesExistants.push_back(coordonees);
 
@@ -169,13 +169,13 @@ void CubesExistants::updateGPU() {
     }
 
 
-    void CubesExistants::deplacerCube(glm::vec3 positionActuelle, glm::vec3 nouvellePosition) {
+    void CubesExistants::deplacerCube(glm::vec3 &positionActuelle, glm::vec3 &nouvellePosition) {
 	    int indice = indiceCube(positionActuelle);
 	    positionCubesExistants[indice]=nouvellePosition;
 	    updateGPU();
     }
 
-    void CubesExistants::supprimerCube(const glm::vec3 position) {
+    void CubesExistants::supprimerCube(glm::vec3 &position) {
 		if (indiceCube(position) != -1) {
 			int indiceCubeSupp = indiceCube(position);
 			// int indiceDernier = positionCubesExistants.size()-1;
@@ -185,7 +185,7 @@ void CubesExistants::updateGPU() {
 		}
     }
 
-    int CubesExistants::indiceCube(const glm::vec3 position) {
+    int CubesExistants::indiceCube(const glm::vec3 &position) {
 	    for (int i = 0; i < positionCubesExistants.size(); ++i) {
 		    if(glm::length(position-positionCubesExistants[i]) < 0.1f){
 			    return i;
@@ -194,7 +194,7 @@ void CubesExistants::updateGPU() {
 	    return -1; 
     }
 
-    void CubesExistants::changeCouleur(glm::vec3 cubePosition, glm::vec4 nouvelleCouleur) {
+    void CubesExistants::changeCouleur(const glm::vec3 &cubePosition, const glm::vec4 &nouvelleCouleur) {
 	    if (indiceCube(cubePosition)!=-1) {
 		    int indice = indiceCube(cubePosition);
 		    couleursCubesExistants[indice] = nouvelleCouleur;
@@ -202,7 +202,7 @@ void CubesExistants::updateGPU() {
 	    }
     }
 
-	void CubesExistants::extrusion(glm::vec3 cubePosition, glm::vec4 couleurCube) {
+	void CubesExistants::extrusion(glm::vec3 cubePosition, const glm::vec4 &couleurCube) {
 		while (indiceCube(cubePosition) != -1) {
 			cubePosition.y += 1;
 		}
@@ -210,7 +210,7 @@ void CubesExistants::updateGPU() {
 		updateGPU();
 	}
 
-	void CubesExistants::creuser(glm::vec3 cubePosition, glm::vec4 couleurCube) {
+	void CubesExistants::creuser(glm::vec3 cubePosition, const glm::vec4 &couleurCube) {
 		while (indiceCube(cubePosition) > -1) {
 			cubePosition.y +=1;
 			std::cout << cubePosition.y << std::endl;

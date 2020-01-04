@@ -13,7 +13,7 @@ using namespace Eigen;
 
 // Fonction Phi
 const double phi(const double &d){
-    return exp(-0.2*d*d);
+    return exp(-20*d*d);
 }
 
 // Calcul norme
@@ -23,8 +23,10 @@ const double norm(const glm::vec3 vec1){
 
 // Calcul des omega_i
 
-const VectorXd find_omega(unsigned int nbPointsControle, std::vector<glm::vec3> PositionCubesControle, glm::vec4 Poids) 
+const VectorXd find_omega(const unsigned int &nbPointsControle, const std::vector<glm::vec3> &PositionCubesControle, const Eigen::VectorXd &Poids) // vecteur Eigen pour utiliser LU (ne fonctionne qu'avec des vect de Eigen)
 { 
+    assert(PositionCubesControle.size() == Poids.size() && "Need the same number of elements in PositionCubesControle and in Poids");
+    
     MatrixXd M_contrainte = MatrixXd::Zero(nbPointsControle, nbPointsControle);
     
     // Remplissage de M_contrainte
@@ -34,26 +36,19 @@ const VectorXd find_omega(unsigned int nbPointsControle, std::vector<glm::vec3> 
             M_contrainte(i,j) = phi(norm(PositionCubesControle[i] - PositionCubesControle[j]));
         }
     }
-    
-    VectorXd poids = VectorXd::Ones(nbPointsControle);
-
-    //remplissage du vecteur de poids des points de controle
-    for (int h = 0; h < nbPointsControle; h++) {
-        poids[h] = Poids[h];
-    }
 
     //méthode de résolution de M_contrainte*omega = poids
     // Par méthode LU car plus rapide
 
     PartialPivLU<MatrixXd> lu(M_contrainte);
-    VectorXd omega = lu.solve(poids);
+    VectorXd omega = lu.solve(Poids);
 
     return omega;
 }
 
 // Fonction pour générer le terrain
 
-void gener_terrain(CubesExistants &cubesExistants, const glm::vec3 PositionCubeActuel, unsigned int nbPointsControle, std::vector<glm::vec3> PositionCubesControle, const glm::vec4 Poids, const int nbCubesLignes) {
+void gener_terrain(CubesExistants &cubesExistants, const glm::vec3 PositionCubeActuel, const unsigned int &nbPointsControle, const std::vector<glm::vec3> &PositionCubesControle, const Eigen::VectorXd &Poids, const int &nbCubesLignes) {
 
     VectorXd omega = find_omega(nbPointsControle, PositionCubesControle, Poids);
     double poidsCubeActuel = 0.0;

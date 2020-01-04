@@ -16,7 +16,6 @@ App::App()
     assert(!m_instanciated && "App already created !");
 	m_instanciated = true;
 	m_bShowImGUIDemoWindow = false;
-	//couleurDefaut(0, 0, 0, 1);
 
     spdlog::set_pattern("[%l] %^ %v %$");
 
@@ -74,7 +73,7 @@ void App::initSDL() {
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);	
 	
 	m_window = SDL_CreateWindow(
-		"OpenGL Tutorials !",
+		"Toto's cubic world",
 		SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
 		650, 650,
 		SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI
@@ -107,6 +106,7 @@ void App::onLoopIteration(CubesExistants& cubesExistants, Curseur& curseur) {
 
 	if (ImGui::Button("Creer cube")) 
 	{
+		std::cout << curseur.curseurPosition.x << " " << curseur.curseurPosition.y << " " << curseur.curseurPosition.z << std::endl;
 		cubesExistants.creerUnCube(curseur.curseurPosition, couleurDefaut);
 	}
 	ImGui::SameLine();
