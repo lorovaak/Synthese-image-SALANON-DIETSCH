@@ -13,7 +13,7 @@ using namespace Eigen;
 
 // Fonction Phi
 const double phi(const double &d){
-    return exp(-20*d*d);
+    return exp(-10*d*d);
 }
 
 // Calcul norme

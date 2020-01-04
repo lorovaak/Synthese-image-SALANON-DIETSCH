@@ -87,9 +87,9 @@ int main(int argc, char* argv[]) {
 	unsigned int nbPointsControle = 4;
 
 	glm::vec3 positionCube1(10, 10, 0);
-	glm::vec3 positionCube2(-10, -10, 0);
+	glm::vec3 positionCube2(-10, 10, 0);
 	glm::vec3 positionCube3(0, 10, 10);
-	glm::vec3 positionCube4(0, -10, -10);
+	glm::vec3 positionCube4(0, 10, -10);
 
 	std::vector<glm::vec3> positionCubesControle;
 
@@ -102,7 +102,7 @@ int main(int argc, char* argv[]) {
 	// vecteur des poids 
 
 	Eigen::VectorXd poids(nbPointsControle);
-	poids << -0.1, -0.2, -0.3, -0.4;
+	poids << 0.1, 0.2, 0.3, 0.4;
 
 	// determination des omega
 
