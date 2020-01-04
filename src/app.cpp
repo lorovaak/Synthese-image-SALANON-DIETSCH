@@ -144,6 +144,16 @@ void App::onLoopIteration(CubesExistants& cubesExistants, Curseur& curseur) {
 	ImGui::SameLine();
 
 
+	if (ImGui::Button("Mode nuit"))
+	{
+		cubesExistants.lightEffect = glm::vec4 (0.2f, 0.2f, 0.2f, 1.0f);
+	}
+
+	if (ImGui::Button("Mode jour"))
+	{
+		cubesExistants.lightEffect = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+	}
+
 	// ImGui::Checkbox("Show Demo Window", &m_bShowImGUIDemoWindow);
 
 	ImGui::End();

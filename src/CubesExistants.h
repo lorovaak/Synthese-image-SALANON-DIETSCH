@@ -10,7 +10,7 @@ class CubesExistants {
 public:
     CubesExistants();
     ~CubesExistants();
-	void draw(const glimac::TrackballCamera& cam);
+	void draw(const glimac::TrackballCamera& cam, const glm::vec4 &lightEffect);
 	void CubesExistants::creerUnCube(const glm::vec3& coordonees, const glm::vec4& couleurs);
 	void CubesExistants::deplacerCube(glm::vec3& positionActuelle, glm::vec3& nouvellePosition);
 	void CubesExistants::supprimerCube(glm::vec3& position);
@@ -23,6 +23,7 @@ public:
 public:
 	std::vector<glm::vec3> positionCubesExistants;
 	std::vector<glm::vec4> couleursCubesExistants;
+	glm::vec4 lightEffect;
 
 private:
     unsigned int m_vao;

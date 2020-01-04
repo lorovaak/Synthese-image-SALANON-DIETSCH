@@ -38,10 +38,10 @@ void Curseur::move_z(const int i)
 	cubeCurseur.deplacerCube(anciennePosition, curseurPosition);
 }
 
-void Curseur::draw(const glimac::TrackballCamera& cam) {
+void Curseur::draw(const glimac::TrackballCamera& cam, const glm::vec4 curseurColor) {
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	cubeCurseur.draw(cam);
+	cubeCurseur.draw(cam, curseurColor);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 }

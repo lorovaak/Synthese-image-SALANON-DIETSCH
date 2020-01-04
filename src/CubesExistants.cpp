@@ -52,7 +52,7 @@ namespace cubeData
 // constructeur cubes existants
 
 CubesExistants::CubesExistants()
-    : m_vao(0), m_ib(0), m_shader("res/shaders/basic.vert", "res/shaders/basic.frag") // initialisation des parametres
+    : m_vao(0), m_ib(0), m_shader("res/shaders/basic.vert", "res/shaders/basic.frag"), lightEffect(1.0f, 1.0f, 1.0f, 1.0f) // initialisation des parametres
 {
     // ------------------ Vertex Buffer
     unsigned int posVB;
@@ -120,7 +120,7 @@ CubesExistants::~CubesExistants()
 
 // methode draw 
 
-void CubesExistants::draw(const glimac::TrackballCamera & cam) 
+void CubesExistants::draw(const glimac::TrackballCamera & cam, const glm::vec4 &lightEffect) 
 {
 	// Bind
 	GLCall(glBindVertexArray(m_vao));
@@ -129,7 +129,10 @@ void CubesExistants::draw(const glimac::TrackballCamera & cam)
 
 	// Update model mat uniform
 	glm::mat4 projMat = glm::infinitePerspective(glm::radians(45.0f), 1.0f, 0.1f); // camera a l'infini
-	m_shader.setUniformMat4f("uViewProj", projMat *cam.getViewMatrix());
+    m_shader.setUniformMat4f("uViewProj", projMat * cam.getViewMatrix());
+   
+    // Light of the world (color and intensity)
+    m_shader.setUniform4f("uLightColor", lightEffect);
 
 
 	// Draw call

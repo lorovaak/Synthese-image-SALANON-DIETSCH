@@ -46,6 +46,7 @@ int main(int argc, char* argv[]) {
 	const int nbCubesMonde = nbCubesLigne * nbCubesLigne * nbCubesLigne; // nombre de cubes du monde
 	CubesExistants cubesExistants; // liste des cubes existants dans le monde
 
+
 	// creation du sol ; état initial du monde 3 couches de blocs de même couleur
 		// les cubes du fond sont bruns 
 		for (int x = -(nbCubesLigne / 2); x < nbCubesLigne / 2; x++) {
@@ -220,8 +221,8 @@ int main(int argc, char* argv[]) {
 
 			// Draw a chaque iteration du curseur et des cubes
 
-			curseur.draw(camera); // draw le curseur 
-			cubesExistants.draw(camera); // draw tous les cubes existants en une seule fois
+			curseur.draw(camera, glm::vec4 (1.0f, 1.0f, 1.0f, 1.0f)); // draw le curseur 
+			cubesExistants.draw(camera, cubesExistants.lightEffect); // draw tous les cubes existants en une seule fois
 
 			// End frame
 
