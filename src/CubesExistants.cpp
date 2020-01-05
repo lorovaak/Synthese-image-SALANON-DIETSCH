@@ -226,7 +226,6 @@ void CubesExistants::updateGPU() {
 	void CubesExistants::creuser(glm::vec3 cubePosition, const glm::vec4 &couleurCube) {
 		while (indiceCube(cubePosition) > -1) {
 			cubePosition.y +=1;
-			std::cout << cubePosition.y << std::endl;
 		}
 		cubePosition.y -= 1;
 		supprimerCube(cubePosition);
