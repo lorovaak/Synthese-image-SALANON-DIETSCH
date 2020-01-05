@@ -6,14 +6,16 @@
 #include <glm/glm.hpp>
 
 
-#include "radialBasicFonction.hpp"
+#include "radialBasisFonction.hpp"
 #include "CubesExistants.h"
 
 using namespace Eigen;
 
 // Fonction Phi
 const double phi(const double &d){
-    return exp(-10*d*d);
+    return exp(-20*d*d); // gaussian
+   // return sqrt(1 + 0.2*10E-10 * d*d); // multiquadratic
+    // return 1.0f / (1 + 0.2 * 10E10 * d * d);
 }
 
 // Calcul norme
@@ -59,9 +61,12 @@ void gener_terrain(CubesExistants &cubesExistants, const glm::vec3 PositionCubeA
         poidsCubeActuel += omega[i] * phi(norm((PositionCubeActuel - PositionCubesControle[i])));
     }
 
-    if (poidsCubeActuel > 0.0)
+    if (poidsCubeActuel > 0.0 )
     {
+       /* if (PositionCubeActuel.y < PositionCubesControle[0].y)
+        {*/
         cubesExistants.creerUnCube(PositionCubeActuel, glm::vec4(2.f / 255, 42.f / 255, 120.f / 255, 1.f));
+        //}
     }
 
 

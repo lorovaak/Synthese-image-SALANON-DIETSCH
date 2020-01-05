@@ -15,7 +15,7 @@
 #include "CubesExistants.h"
 #include "TrackballCamera.hpp"
 #include "Curseur.h"
-#include "radialBasicFonction.hpp"
+#include "radialBasisFonction.hpp"
 
 //////////
 // MAIN //
