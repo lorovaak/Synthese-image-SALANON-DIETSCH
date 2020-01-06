@@ -43,7 +43,6 @@ int main(int argc, char* argv[]) {
 
 	// création des cubes
 	const int nbCubesLigne = 50;  // nombres de cubes par arretes 
-	const int nbCubesMonde = nbCubesLigne * nbCubesLigne * nbCubesLigne; // nombre de cubes du monde
 	CubesExistants cubesExistants; // liste des cubes existants dans le monde
 
 
@@ -86,10 +85,10 @@ int main(int argc, char* argv[]) {
 
 	unsigned int nbPointsControle = 4;
 
-	glm::vec3 positionCube1(10, 10, 0);
-	glm::vec3 positionCube2(-10, 10, 0);
-	glm::vec3 positionCube3(0, 10, 10);
-	glm::vec3 positionCube4(0, 10, -10);
+	glm::vec3 positionCube1(10, -10, 0);
+	glm::vec3 positionCube2(-10,-4, 0);
+	glm::vec3 positionCube3(10, 4, 0);
+	glm::vec3 positionCube4(-10, 5, 0);
 
 	std::vector<glm::vec3> positionCubesControle;
 
@@ -102,23 +101,21 @@ int main(int argc, char* argv[]) {
 	// vecteur des poids 
 
 	Eigen::VectorXd poids(nbPointsControle);
-	poids << 0.1, 0.2, 0.3, 0.4;
-
-	// determination des omega
-
-	find_omega(nbPointsControle, positionCubesControle, poids);
+	poids << 0.1, -0.5, 0.1, -0.2;
 
 	// generation du terrain A COMMENTER POUR NE PAS AVOIR DE RBF
 
 	for (int x = -(nbCubesLigne / 2); x < nbCubesLigne / 2; x++) {
-		for (int y = -(nbCubesLigne / 2) + 3; y < nbCubesLigne / 2; y++) { // +3 pour ne pas toucher au sol
+		// for (int y = -(nbCubesLigne / 2) + 3; y < nbCubesLigne / 2; y++) { // +3 pour ne pas toucher au sol
+		for (int y = + 3; y < nbCubesLigne / 2; y++) { 
 			for (int z = -(nbCubesLigne / 2); z < nbCubesLigne / 2; z++) {
 
-				gener_terrain(cubesExistants, glm::vec3(x, y, z), nbPointsControle, positionCubesControle, poids, nbCubesLigne);
+				 RBF::gener_terrain(cubesExistants, glm::vec3(x, y, z), nbPointsControle, positionCubesControle, poids, nbCubesLigne);
 
 			}
 		}
 	}
+
 
 	//////////////////////
 	// application loop //
