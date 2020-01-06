@@ -1,5 +1,9 @@
 # Set standards
-cmake_minimum_required(VERSION 3.10)
+if (UNIX)
+    cmake_minimum_required(VERSION 3.7)
+else()
+	cmake_minimum_required(VERSION 3.10)
+endif()
 project(DIETSCH_SALANON C CXX)
 
 # /////////////////////////////////////////////////////////////////////////////
