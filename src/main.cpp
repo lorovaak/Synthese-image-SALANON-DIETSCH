@@ -124,7 +124,7 @@ int main(int argc, char* argv[]) {
 			}
 		}
 	}
-
+	//aaaaaaaa
 	RBF::gener_terrain(cubesExistants, evaluationPts, positionCubesControle, poids);
 
 	// save
