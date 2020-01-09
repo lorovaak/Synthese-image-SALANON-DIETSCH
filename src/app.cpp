@@ -134,7 +134,7 @@ void App::onLoopIteration(CubesExistants& cubesExistants, Curseur& curseur) {
 			cubesExistants.creuser(curseur.curseurPosition, couleurExtrusion2);
 		}
 
-		std::cout << curseur.curseurPosition.y << std::endl;
+		//std::cout << curseur.curseurPosition.y << std::endl;
 	}
 
 	ImGui::ColorEdit4("Couleur", (float*)&couleurDefaut);
@@ -167,7 +167,7 @@ void App::onLoopIteration(CubesExistants& cubesExistants, Curseur& curseur) {
 	ImGui::End();
 	
 
-	if (m_bShowImGUIDemoWindow) // Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
+	if (m_bShowImGUIDemoWindow) // Show the big demo window 
 		ImGui::ShowDemoWindow(&m_bShowImGUIDemoWindow);
 
 }

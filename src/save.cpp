@@ -38,7 +38,8 @@ void load(CubesExistants &cubesExistants, string filepath, string filename){
 
  
         for (int i=0; i<texte.size(); i++)
-        {
+        { 
+            cubesExistants.creerUnCube(glm::vec3(0,0,0), glm::vec4(1.0f, 1.0f, 1.0f, 0.0f));
             sscanf(texte[i].c_str(), "%d %f %f %f %f %f %f %f", & i, &cubesExistants.positionCubesExistants[i].x, &cubesExistants.positionCubesExistants[i].y, &cubesExistants.positionCubesExistants[i].z, &cubesExistants.couleursCubesExistants[i].x, &cubesExistants.couleursCubesExistants[i].y, &cubesExistants.couleursCubesExistants[i].z, &cubesExistants.couleursCubesExistants[i].w);
         }
     }

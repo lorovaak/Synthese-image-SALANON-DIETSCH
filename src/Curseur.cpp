@@ -27,8 +27,6 @@ void Curseur::move_y(const int i)
 	curseurPosition.y += i;
 	cubeCurseur.deplacerCube(anciennePosition, curseurPosition);
 
-	//test
-	std::cout << curseurPosition.y << std::endl;
 }
 
 void Curseur::move_z(const int i)

@@ -48,23 +48,23 @@ int main(int argc, char* argv[]) {
 	CubesExistants cubesExistants; // liste des cubes existants dans le monde
 
 
-	//// creation du sol ; etat initial du monde 3 couches de blocs de meme couleur
-	//	// les cubes du fond sont bruns 
-	//for (int x = -(nbCubesLigne / 2); x < nbCubesLigne / 2; x++) {
-	//	for (int y = -(3.0 / 2); y < 3.0 / 2 - 1; y++) {
-	//		for (int z = -(nbCubesLigne / 2); z < nbCubesLigne / 2; z++) {
-	//			cubesExistants.creerUnCube(glm::vec3(x, y, z), glm::vec4(76.f / 255, 9.f / 255, 9.f / 255, 1.f));
-	//		}
-	//	}
-	//}
-	//// les cubes de la couche superieure sont verts 
-	//for (int x = -(nbCubesLigne / 2); x < nbCubesLigne / 2; x++) {
-	//	for (int y = 3.0 / 2 - 1; y < 3.0 / 2; y++) {
-	//		for (int z = -(nbCubesLigne / 2); z < nbCubesLigne / 2; z++) {
-	//			cubesExistants.creerUnCube(glm::vec3(x, y, z), glm::vec4(125.f/255, 188.f/255, 123.f/255, 1.f));
-	//		}
-	//	}
-	//}
+	// creation du sol ; etat initial du monde 3 couches de blocs de meme couleur
+		// les cubes du fond sont bruns 
+	for (int x = -(nbCubesLigne / 2); x < nbCubesLigne / 2; x++) {
+		for (int y = -(3.0 / 2); y < 3.0 / 2 - 1; y++) {
+			for (int z = -(nbCubesLigne / 2); z < nbCubesLigne / 2; z++) {
+				cubesExistants.creerUnCube(glm::vec3(x, y, z), glm::vec4(76.f / 255, 9.f / 255, 9.f / 255, 1.f));
+			}
+		}
+	}
+	// les cubes de la couche superieure sont verts 
+	for (int x = -(nbCubesLigne / 2); x < nbCubesLigne / 2; x++) {
+		for (int y = 3.0 / 2 - 1; y < 3.0 / 2; y++) {
+			for (int z = -(nbCubesLigne / 2); z < nbCubesLigne / 2; z++) {
+				cubesExistants.creerUnCube(glm::vec3(x, y, z), glm::vec4(125.f/255, 188.f/255, 123.f/255, 1.f));
+			}
+		}
+	}
 
 	//creation du curseur
 	Curseur curseur;
@@ -152,11 +152,11 @@ int main(int argc, char* argv[]) {
 				// zoom et dezoom avec la molette 
 
 				if (e.wheel.y > 0) {
-					std::cout << "mouse wheel" << std::endl;
+					//std::cout << "mouse wheel" << std::endl;
 					camera.moveFront(zoom);
 				}
 				else if (e.wheel.y < 0) {
-					std::cout << "mouse wheel" << std::endl;
+					//std::cout << "mouse wheel" << std::endl;
 					camera.moveFront(-zoom);
 				}
 				break;
@@ -182,27 +182,27 @@ int main(int argc, char* argv[]) {
 				// deplacement du curseur 
 
 				if (e.key.keysym.sym == SDLK_UP) {
-					std::cout << "UP pressed" << std::endl;
+					//std::cout << "UP pressed" << std::endl;
 					curseur.move_y(1);
 				}
 				else if (e.key.keysym.sym == SDLK_DOWN) {
-					std::cout << "DOWN pressed" << std::endl;
+					//std::cout << "DOWN pressed" << std::endl;
 					curseur.move_y(-1);
 				}
 				else if (e.key.keysym.sym == SDLK_LEFT) {
-					std::cout << "LEFT pressed" << std::endl;
+					//std::cout << "LEFT pressed" << std::endl;
 					curseur.move_x(-1);
 				}
 				else if (e.key.keysym.sym == SDLK_RIGHT) {
-					std::cout << "RIGHT pressed" << std::endl;
+					//std::cout << "RIGHT pressed" << std::endl;
 					curseur.move_x(1);
 				}
 				else if (e.key.keysym.sym == SDLK_a) {
-					std::cout << "A pressed" << std::endl;
+					//std::cout << "A pressed" << std::endl;
 					curseur.move_z(-1);
 				}
 				else if (e.key.keysym.sym == SDLK_e) {
-					std::cout << "E pressed" << std::endl;
+					//std::cout << "E pressed" << std::endl;
 					curseur.move_z(1);
 				}
 
@@ -232,12 +232,6 @@ int main(int argc, char* argv[]) {
 
 		curseur.draw(camera, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f)); // draw le curseur 
 		cubesExistants.draw(camera, cubesExistants.lightEffect); // draw tous les cubes existants en une seule fois
-
-		// save
-		// save(cubesExistants, "./save/", "sauvegarde 1");
-
-		// load
-		// load(cubesExistants, "./save/", "sauvegarde 1");
 
 		// End frame
 
