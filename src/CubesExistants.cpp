@@ -146,7 +146,8 @@ void CubesExistants::draw(const glimac::TrackballCamera & cam, const glm::vec4 &
 
 
 	// Draw call
-    GLCall(glDrawElementsInstanced(GL_TRIANGLES, std::size(cubeData::indices), GL_UNSIGNED_SHORT, 0, positionCubesExistants.size()));
+    //GLCall(glDrawElementsInstanced(GL_TRIANGLES, std::size(cubeData::indices), GL_UNSIGNED_SHORT, 0, positionCubesExistants.size()));
+	GLCall(glDrawElementsInstanced(GL_TRIANGLES, 36, GL_UNSIGNED_SHORT, 0, positionCubesExistants.size()));
 }
 
 // methode update GPU 
@@ -226,7 +227,6 @@ void CubesExistants::updateGPU() {
 	void CubesExistants::creuser(glm::vec3 cubePosition, const glm::vec4 &couleurCube) {
 		while (indiceCube(cubePosition) > -1) {
 			cubePosition.y +=1;
-			std::cout << cubePosition.y << std::endl;
 		}
 		cubePosition.y -= 1;
 		supprimerCube(cubePosition);
