@@ -154,7 +154,15 @@ void App::onLoopIteration(CubesExistants& cubesExistants, Curseur& curseur) {
 		cubesExistants.lightEffect = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 	}
 
-	// ImGui::Checkbox("Show Demo Window", &m_bShowImGUIDemoWindow);
+	if (ImGui::Button("Save"))
+	{
+		save(cubesExistants, "./save/", "sauvegarde 1");
+	}
+
+	if (ImGui::Button("Load"))
+	{
+		load(cubesExistants, "./save/", "sauvegarde 1");
+	}
 
 	ImGui::End();
 	

@@ -16,6 +16,7 @@
 #include "TrackballCamera.hpp"
 #include "Curseur.h"
 #include "radialBasisFonction.hpp"
+#include "save.h"
 
 
 //////////
@@ -39,11 +40,11 @@ int main(int argc, char* argv[]) {
 	glimac::TrackballCamera camera;
 
 	//camera parameters
-	float zoom = 1.0f;
+	float zoom = 3.0f;
 	float speed = 1.0f;
 
 	// creation des cubes
-	const int nbCubesLigne = 50;  // nombres de cubes par arretes 
+	const int nbCubesLigne = 40;  // nombres de cubes par arretes 
 	CubesExistants cubesExistants; // liste des cubes existants dans le monde
 
 
@@ -61,7 +62,7 @@ int main(int argc, char* argv[]) {
 		for (int y = 3.0 / 2 - 1; y < 3.0 / 2; y++) {
 			for (int z = -(nbCubesLigne / 2); z < nbCubesLigne / 2; z++) {
 				//cubesExistants.creerUnCube(glm::vec3(x, y, z), glm::vec4(125.f/255, 188.f/255, 123.f/255, 1.f));
-				cubesExistants.creerUnCube(glm::vec3(x, y, z), glm::vec4(247.f / 255, 1.0, 1.0, 1.f));
+				cubesExistants.creerUnCube(glm::vec3(x, y, z), glm::vec4(140.f / 255, 200.f / 255, 20.f / 255, 1.f));
 			}
 		}
 	}
@@ -85,11 +86,11 @@ int main(int argc, char* argv[]) {
 
 	// creation des points de controle
 
-	unsigned int nbPointsControle = 1;
+	unsigned int nbPointsControle = 3;
 
-	glm::vec3 positionCube1(0, 0, 0);
-	//glm::vec3 positionCube2(18,14, 0);
-	//glm::vec3 positionCube3(0, 18, 18);
+	glm::vec3 positionCube1(10, 10, 0);
+	glm::vec3 positionCube2(0,10, 0);
+	glm::vec3 positionCube3(-10, 10, 0);
 	//glm::vec3 positionCube4(13, 14, 13);
 	//glm::vec3 positionCube5(7, 13, -7);
 	//glm::vec3 positionCube6(13, 9, -5);
@@ -99,8 +100,8 @@ int main(int argc, char* argv[]) {
 	std::vector<glm::vec3> positionCubesControle;
 
 	positionCubesControle.push_back(positionCube1);
-	//positionCubesControle.push_back(positionCube2);
-	//positionCubesControle.push_back(positionCube3);
+	positionCubesControle.push_back(positionCube2);
+	positionCubesControle.push_back(positionCube3);
 	//positionCubesControle.push_back(positionCube4);
 	//positionCubesControle.push_back(positionCube5);
 	//positionCubesControle.push_back(positionCube6);
@@ -110,7 +111,7 @@ int main(int argc, char* argv[]) {
 	// vecteur des poids 
 
 	Eigen::VectorXd poids(nbPointsControle);
-	poids << 10; // 0.5, 0.1, 0.2, 0.2, 0.2, 0.2, 0.2 ;
+	poids << 10, -10, 10; // 0.5, 0.1, 0.2, 0.2, 0.2, 0.2, 0.2 ;
 
 	// generation du terrain A COMMENTER POUR NE PAS AVOIR DE RBF
 
@@ -124,12 +125,9 @@ int main(int argc, char* argv[]) {
 			}
 		}
 	}
-	//aaaaaaaa
-	RBF::gener_terrain(cubesExistants, evaluationPts, positionCubesControle, poids);
+	
+	//RBF::gener_terrain(cubesExistants, evaluationPts, positionCubesControle, poids);
 
-	// save
-
-	// save("Cubes du monde", cubesExistants);
 
 	//////////////////////
 	// application loop //
@@ -236,6 +234,11 @@ int main(int argc, char* argv[]) {
 		curseur.draw(camera, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f)); // draw le curseur 
 		cubesExistants.draw(camera, cubesExistants.lightEffect); // draw tous les cubes existants en une seule fois
 
+		// save
+		// save(cubesExistants, "./save/", "sauvegarde 1");
+
+		// load
+		// load(cubesExistants, "./save/", "sauvegarde 1");
 
 		// End frame
 
