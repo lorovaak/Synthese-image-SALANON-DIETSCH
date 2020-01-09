@@ -17,6 +17,7 @@
 #include "Curseur.h"
 #include "radialBasisFonction.hpp"
 
+
 //////////
 // MAIN //
 //////////
@@ -28,10 +29,10 @@ int main(int argc, char* argv[]) {
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	// couleur de la fenêtre
+	// couleur de la fenetre
 	glClearColor(197.0 / 255, 217.0 / 255, 222.0 / 255, 1);
 
-	/* Création de la matrice MV  */
+	/* Creation de la matrice MV  */
 	glm::mat4 globalMVMatrix; // pour la camera 
 
 	//creation de la camera trackballCamera
@@ -41,28 +42,29 @@ int main(int argc, char* argv[]) {
 	float zoom = 1.0f;
 	float speed = 1.0f;
 
-	// création des cubes
+	// creation des cubes
 	const int nbCubesLigne = 50;  // nombres de cubes par arretes 
 	CubesExistants cubesExistants; // liste des cubes existants dans le monde
 
 
-	// creation du sol ; état initial du monde 3 couches de blocs de même couleur
+	// creation du sol ; etat initial du monde 3 couches de blocs de meme couleur
 		// les cubes du fond sont bruns 
-		for (int x = -(nbCubesLigne / 2); x < nbCubesLigne / 2; x++) {
-			for (int y = -(3.0 / 2); y < 3.0 / 2 - 1; y++) {
-				for (int z = -(nbCubesLigne / 2); z < nbCubesLigne / 2; z++) {
-					cubesExistants.creerUnCube(glm::vec3(x, y, z),glm::vec4(76.f/255, 9.f/255, 9.f/255, 1.f));
-				}
+	for (int x = -(nbCubesLigne / 2); x < nbCubesLigne / 2; x++) {
+		for (int y = -(3.0 / 2); y < 3.0 / 2 - 1; y++) {
+			for (int z = -(nbCubesLigne / 2); z < nbCubesLigne / 2; z++) {
+				cubesExistants.creerUnCube(glm::vec3(x, y, z), glm::vec4(76.f / 255, 9.f / 255, 9.f / 255, 1.f));
 			}
 		}
-		// les cubes de la couche superieure sont verts 
-		for (int x = -(nbCubesLigne / 2); x < nbCubesLigne / 2; x++) {
-			for (int y = 3.0 / 2 - 1; y < 3.0 / 2; y++) {
-				for (int z = -(nbCubesLigne / 2); z < nbCubesLigne / 2; z++) {
-					cubesExistants.creerUnCube(glm::vec3(x, y, z), glm::vec4(125.f/255, 188.f/255, 123.f/255, 1.f));
-				}
+	}
+	// les cubes de la couche superieure sont verts 
+	for (int x = -(nbCubesLigne / 2); x < nbCubesLigne / 2; x++) {
+		for (int y = 3.0 / 2 - 1; y < 3.0 / 2; y++) {
+			for (int z = -(nbCubesLigne / 2); z < nbCubesLigne / 2; z++) {
+				//cubesExistants.creerUnCube(glm::vec3(x, y, z), glm::vec4(125.f/255, 188.f/255, 123.f/255, 1.f));
+				cubesExistants.creerUnCube(glm::vec3(x, y, z), glm::vec4(247.f / 255, 1.0, 1.0, 1.f));
 			}
 		}
+	}
 
 	//creation du curseur
 	Curseur curseur;
@@ -77,51 +79,63 @@ int main(int argc, char* argv[]) {
 	ImGui::StyleColorsClassic();
 
 
-///////////////////////////
-// Radial Basic Function //
-///////////////////////////
+	///////////////////////////
+	// Radial Basic Function //
+	///////////////////////////
 
-// creation des points de controle
+	// creation des points de controle
 
-	unsigned int nbPointsControle = 4;
+	unsigned int nbPointsControle = 1;
 
-	glm::vec3 positionCube1(10, -10, 0);
-	glm::vec3 positionCube2(-10,-4, 0);
-	glm::vec3 positionCube3(10, 4, 0);
-	glm::vec3 positionCube4(-10, 5, 0);
+	glm::vec3 positionCube1(0, 0, 0);
+	//glm::vec3 positionCube2(18,14, 0);
+	//glm::vec3 positionCube3(0, 18, 18);
+	//glm::vec3 positionCube4(13, 14, 13);
+	//glm::vec3 positionCube5(7, 13, -7);
+	//glm::vec3 positionCube6(13, 9, -5);
+	//glm::vec3 positionCube7(-7, 13, -7);
+	//glm::vec3 positionCube8(-13, 11, -13);
 
 	std::vector<glm::vec3> positionCubesControle;
 
 	positionCubesControle.push_back(positionCube1);
-	positionCubesControle.push_back(positionCube2);
-	positionCubesControle.push_back(positionCube3);
-	positionCubesControle.push_back(positionCube4);
-
+	//positionCubesControle.push_back(positionCube2);
+	//positionCubesControle.push_back(positionCube3);
+	//positionCubesControle.push_back(positionCube4);
+	//positionCubesControle.push_back(positionCube5);
+	//positionCubesControle.push_back(positionCube6);
+	//positionCubesControle.push_back(positionCube7);
+	//positionCubesControle.push_back(positionCube8);
 
 	// vecteur des poids 
 
 	Eigen::VectorXd poids(nbPointsControle);
-	poids << 0.1, -0.5, 0.1, -0.2;
+	poids << 10; // 0.5, 0.1, 0.2, 0.2, 0.2, 0.2, 0.2 ;
 
 	// generation du terrain A COMMENTER POUR NE PAS AVOIR DE RBF
 
+	std::vector<glm::vec3> evaluationPts;
+
 	for (int x = -(nbCubesLigne / 2); x < nbCubesLigne / 2; x++) {
 		// for (int y = -(nbCubesLigne / 2) + 3; y < nbCubesLigne / 2; y++) { // +3 pour ne pas toucher au sol
-		for (int y = + 3; y < nbCubesLigne / 2; y++) { 
+		for (int y = +2; y < nbCubesLigne / 2; y++) {
 			for (int z = -(nbCubesLigne / 2); z < nbCubesLigne / 2; z++) {
-
-				 RBF::gener_terrain(cubesExistants, glm::vec3(x, y, z), nbPointsControle, positionCubesControle, poids, nbCubesLigne);
-
+				evaluationPts.push_back(glm::vec3(x, y, z));
 			}
 		}
 	}
 
+	RBF::gener_terrain(cubesExistants, evaluationPts, positionCubesControle, poids);
+
+	// save
+
+	// save("Cubes du monde", cubesExistants);
 
 	//////////////////////
 	// application loop //
 	//////////////////////
 
-	while (app.isRunning()) 
+	while (app.isRunning())
 	{
 		// gestion des evenements 
 
@@ -131,10 +145,10 @@ int main(int argc, char* argv[]) {
 
 			switch (e.type) {
 			case SDL_QUIT:
-			app.exit();
-			break;
+				app.exit();
+				break;
 
-			// gestion de la souris 
+				// gestion de la souris 
 
 			case SDL_MOUSEWHEEL:
 
@@ -148,8 +162,8 @@ int main(int argc, char* argv[]) {
 					std::cout << "mouse wheel" << std::endl;
 					camera.moveFront(-zoom);
 				}
-			break;
-			
+				break;
+
 			case SDL_MOUSEMOTION:
 
 				// deplacer la trackball avec le curseur 
@@ -162,10 +176,10 @@ int main(int argc, char* argv[]) {
 						camera.rotateLeft(float(e.motion.yrel) * speed);
 					}
 				}
-			break;
+				break;
 
-			// gestion des touches clavier
-			
+				// gestion des touches clavier
+
 			case SDL_KEYDOWN:
 
 				// deplacement du curseur 
@@ -202,28 +216,30 @@ int main(int argc, char* argv[]) {
 			}
 		}
 
+
 		// Rendering code 
 
 			// Calcul de la camera 
 
-			globalMVMatrix = camera.getViewMatrix();
+		globalMVMatrix = camera.getViewMatrix();
 
-			// Begin frame 
+		// Begin frame 
 
-			app.beginFrame();
+		app.beginFrame();
 
-			// Iteration loop
+		// Iteration loop
 
-			app.onLoopIteration(cubesExistants, curseur);
+		app.onLoopIteration(cubesExistants, curseur);
 
-			// Draw a chaque iteration du curseur et des cubes
+		// Draw a chaque iteration du curseur et des cubes
 
-			curseur.draw(camera, glm::vec4 (1.0f, 1.0f, 1.0f, 1.0f)); // draw le curseur 
-			cubesExistants.draw(camera, cubesExistants.lightEffect); // draw tous les cubes existants en une seule fois
+		curseur.draw(camera, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f)); // draw le curseur 
+		cubesExistants.draw(camera, cubesExistants.lightEffect); // draw tous les cubes existants en une seule fois
 
-			// End frame
 
-			app.endFrame();
+		// End frame
+
+		app.endFrame();
 
 
 	} // sortie de while running 
