@@ -14,7 +14,6 @@ using namespace Eigen;
 // Calcul norme
 const double RBF::norm(const glm::vec3& vec1) {
     return glm::length2(vec1);
-    //return( (double)sqrt(vec1.x*vec1.x + vec1.y*vec1.y + vec1.z*vec1.z ));
 }
 
 
@@ -58,14 +57,9 @@ void RBF::gener_terrain(CubesExistants& cubesExistants, const std::vector<glm::v
         }
     }
 
-    for (size_t i = 0; i < 20; i++) {
-        std::cout << evaluatedPts[i] << " /";
-    }
-    std::cout << std::endl;
-
     for (int i = 0; i < evaluationPts.size(); i++) {
         if (evaluatedPts[i] > 0) {
-            cubesExistants.creerUnCube(evaluationPts[i], glm::vec4(17.f / 255, 228.f / 255, 247.f / 255, 0.5f));
+            cubesExistants.creerUnCube(evaluationPts[i], glm::vec4(177.f / 55, 28.f / 255, 117.f / 255, 1.0f));
         }
     }
 
