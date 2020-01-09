@@ -18,7 +18,7 @@ int save(CubesExistants &cubesExistants, string filepath, string filename){
     file.seekp(0,ios::end);
     for(int i=0; i<cubesExistants.positionCubesExistants.size(); i++)
     {
-        file << i << " " << cubesExistants.positionCubesExistants[i].x << " " << cubesExistants.positionCubesExistants[i].y << " " << cubesExistants.positionCubesExistants[i].z << " " << cubesExistants.couleursCubesExistants[i].x << " " << cubesExistants.couleursCubesExistants[i].y << " " << cubesExistants.couleursCubesExistants[i].z << " " << endl;
+        file << i << " " << cubesExistants.positionCubesExistants[i].x << " " << cubesExistants.positionCubesExistants[i].y << " " << cubesExistants.positionCubesExistants[i].z << " " << cubesExistants.couleursCubesExistants[i].x << " " << cubesExistants.couleursCubesExistants[i].y << " " << cubesExistants.couleursCubesExistants[i].z << " " << cubesExistants.couleursCubesExistants[i].w << endl;
     }
     file.close();
     cout<< "Saved success" << endl;
@@ -36,15 +36,10 @@ void load(CubesExistants &cubesExistants, string filepath, string filename){
             texte.push_back(move(ligne));
         }
 
-        //for(int i=0; i< cubesExistants.positionCubesExistants.size(); i++){
-        //    stockCube[i].isVisible = false;
-        //}
-
-        int indice;
+ 
         for (int i=0; i<texte.size(); i++)
         {
-            sscanf(texte[i].c_str(), "%d %f %f %f %f %f %f", & i, &cubesExistants.positionCubesExistants[i].x, &cubesExistants.positionCubesExistants[i].y, &cubesExistants.positionCubesExistants[i].z, &cubesExistants.couleursCubesExistants[i].x, &cubesExistants.couleursCubesExistants[i].y, &cubesExistants.couleursCubesExistants[i].z);
-            //stockCube[indice].isVisible=true;
+            sscanf(texte[i].c_str(), "%d %f %f %f %f %f %f %f", & i, &cubesExistants.positionCubesExistants[i].x, &cubesExistants.positionCubesExistants[i].y, &cubesExistants.positionCubesExistants[i].z, &cubesExistants.couleursCubesExistants[i].x, &cubesExistants.couleursCubesExistants[i].y, &cubesExistants.couleursCubesExistants[i].z, &cubesExistants.couleursCubesExistants[i].w);
         }
     }
     else cout << "This file doesn't exist" << endl;

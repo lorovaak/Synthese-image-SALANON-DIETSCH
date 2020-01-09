@@ -48,24 +48,23 @@ int main(int argc, char* argv[]) {
 	CubesExistants cubesExistants; // liste des cubes existants dans le monde
 
 
-	// creation du sol ; etat initial du monde 3 couches de blocs de meme couleur
-		// les cubes du fond sont bruns 
-	for (int x = -(nbCubesLigne / 2); x < nbCubesLigne / 2; x++) {
-		for (int y = -(3.0 / 2); y < 3.0 / 2 - 1; y++) {
-			for (int z = -(nbCubesLigne / 2); z < nbCubesLigne / 2; z++) {
-				cubesExistants.creerUnCube(glm::vec3(x, y, z), glm::vec4(76.f / 255, 9.f / 255, 9.f / 255, 1.f));
-			}
-		}
-	}
-	// les cubes de la couche superieure sont verts 
-	for (int x = -(nbCubesLigne / 2); x < nbCubesLigne / 2; x++) {
-		for (int y = 3.0 / 2 - 1; y < 3.0 / 2; y++) {
-			for (int z = -(nbCubesLigne / 2); z < nbCubesLigne / 2; z++) {
-				//cubesExistants.creerUnCube(glm::vec3(x, y, z), glm::vec4(125.f/255, 188.f/255, 123.f/255, 1.f));
-				cubesExistants.creerUnCube(glm::vec3(x, y, z), glm::vec4(140.f / 255, 200.f / 255, 20.f / 255, 1.f));
-			}
-		}
-	}
+	//// creation du sol ; etat initial du monde 3 couches de blocs de meme couleur
+	//	// les cubes du fond sont bruns 
+	//for (int x = -(nbCubesLigne / 2); x < nbCubesLigne / 2; x++) {
+	//	for (int y = -(3.0 / 2); y < 3.0 / 2 - 1; y++) {
+	//		for (int z = -(nbCubesLigne / 2); z < nbCubesLigne / 2; z++) {
+	//			cubesExistants.creerUnCube(glm::vec3(x, y, z), glm::vec4(76.f / 255, 9.f / 255, 9.f / 255, 1.f));
+	//		}
+	//	}
+	//}
+	//// les cubes de la couche superieure sont verts 
+	//for (int x = -(nbCubesLigne / 2); x < nbCubesLigne / 2; x++) {
+	//	for (int y = 3.0 / 2 - 1; y < 3.0 / 2; y++) {
+	//		for (int z = -(nbCubesLigne / 2); z < nbCubesLigne / 2; z++) {
+	//			cubesExistants.creerUnCube(glm::vec3(x, y, z), glm::vec4(125.f/255, 188.f/255, 123.f/255, 1.f));
+	//		}
+	//	}
+	//}
 
 	//creation du curseur
 	Curseur curseur;
