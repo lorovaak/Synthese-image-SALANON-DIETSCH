@@ -110,7 +110,7 @@ int main(int argc, char* argv[]) {
 	// vecteur des poids 
 
 	Eigen::VectorXd poids(nbPointsControle);
-	poids << 1, -1, 1, -1, -1; // 0.5, 0.1, 0.2, 0.2, 0.2, 0.2, 0.2 ;
+	poids << -1, 1, -1, 1, 1; // 0.5, 0.1, 0.2, 0.2, 0.2, 0.2, 0.2 ;
 
 	// generation du terrain A COMMENTER POUR NE PAS AVOIR DE RBF
 
@@ -125,7 +125,7 @@ int main(int argc, char* argv[]) {
 		}
 	}
 	
-	RBF::gener_terrain(cubesExistants, evaluationPts, positionCubesControle, poids);
+	//RBF::gener_terrain(cubesExistants, evaluationPts, positionCubesControle, poids);
 
 
 	//////////////////////
