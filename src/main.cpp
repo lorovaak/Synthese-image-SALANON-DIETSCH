@@ -44,7 +44,7 @@ int main(int argc, char* argv[]) {
 	float speed = 1.0f;
 
 	// creation des cubes
-	const int nbCubesLigne = 40;  // nombres de cubes par arretes 
+	const int nbCubesLigne = 50;  // nombres de cubes par arretes 
 	CubesExistants cubesExistants; // liste des cubes existants dans le monde
 
 
@@ -85,13 +85,13 @@ int main(int argc, char* argv[]) {
 
 	// creation des points de controle
 
-	unsigned int nbPointsControle = 3;
+	unsigned int nbPointsControle = 5;
 
 	glm::vec3 positionCube1(10, 10, 0);
 	glm::vec3 positionCube2(0,10, 0);
 	glm::vec3 positionCube3(-10, 10, 0);
-	//glm::vec3 positionCube4(13, 14, 13);
-	//glm::vec3 positionCube5(7, 13, -7);
+	glm::vec3 positionCube4(15, 14, 5);
+	glm::vec3 positionCube5(-5, 7, -14);
 	//glm::vec3 positionCube6(13, 9, -5);
 	//glm::vec3 positionCube7(-7, 13, -7);
 	//glm::vec3 positionCube8(-13, 11, -13);
@@ -101,8 +101,8 @@ int main(int argc, char* argv[]) {
 	positionCubesControle.push_back(positionCube1);
 	positionCubesControle.push_back(positionCube2);
 	positionCubesControle.push_back(positionCube3);
-	//positionCubesControle.push_back(positionCube4);
-	//positionCubesControle.push_back(positionCube5);
+	positionCubesControle.push_back(positionCube4);
+	positionCubesControle.push_back(positionCube5);
 	//positionCubesControle.push_back(positionCube6);
 	//positionCubesControle.push_back(positionCube7);
 	//positionCubesControle.push_back(positionCube8);
@@ -110,7 +110,7 @@ int main(int argc, char* argv[]) {
 	// vecteur des poids 
 
 	Eigen::VectorXd poids(nbPointsControle);
-	poids << 10, -10, 10; // 0.5, 0.1, 0.2, 0.2, 0.2, 0.2, 0.2 ;
+	poids << 1, -1, 1, -1, -1; // 0.5, 0.1, 0.2, 0.2, 0.2, 0.2, 0.2 ;
 
 	// generation du terrain A COMMENTER POUR NE PAS AVOIR DE RBF
 
@@ -125,7 +125,7 @@ int main(int argc, char* argv[]) {
 		}
 	}
 	
-	//RBF::gener_terrain(cubesExistants, evaluationPts, positionCubesControle, poids);
+	RBF::gener_terrain(cubesExistants, evaluationPts, positionCubesControle, poids);
 
 
 	//////////////////////

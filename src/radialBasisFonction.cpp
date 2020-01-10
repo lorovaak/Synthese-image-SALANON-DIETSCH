@@ -59,7 +59,7 @@ void RBF::gener_terrain(CubesExistants& cubesExistants, const std::vector<glm::v
 
     for (int i = 0; i < evaluationPts.size(); i++) {
         if (evaluatedPts[i] > 0) {
-            cubesExistants.creerUnCube(evaluationPts[i], glm::vec4(177.f / 55, 28.f / 255, 117.f / 255, 1.0f));
+            cubesExistants.creerUnCube(evaluationPts[i], glm::vec4(117.f / 255, 5.f / 255, 31.f / 255, 1.0f));
         }
     }
 

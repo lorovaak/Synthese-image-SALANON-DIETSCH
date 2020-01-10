@@ -134,7 +134,6 @@ void App::onLoopIteration(CubesExistants& cubesExistants, Curseur& curseur) {
 			cubesExistants.creuser(curseur.curseurPosition, couleurExtrusion2);
 		}
 
-		//std::cout << curseur.curseurPosition.y << std::endl;
 	}
 
 	ImGui::ColorEdit4("Couleur", (float*)&couleurDefaut);
@@ -153,16 +152,19 @@ void App::onLoopIteration(CubesExistants& cubesExistants, Curseur& curseur) {
 	{
 		cubesExistants.lightEffect = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 	}
+	ImGui::SameLine();
 
-	if (ImGui::Button("Save"))
+	if (ImGui::Button("Sauvegarder"))
 	{
 		save(cubesExistants, "./save/", "sauvegarde 1");
 	}
+	ImGui::SameLine();
 
-	if (ImGui::Button("Load"))
+	if (ImGui::Button("Charger"))
 	{
 		load(cubesExistants, "./save/", "sauvegarde 1");
 	}
+	ImGui::SameLine();
 
 	ImGui::End();
 	
