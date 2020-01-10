@@ -8,11 +8,13 @@ layout (location = 3) in vec4 aColorCube;
 out vec4 vColorCube;
 out vec3 fragPos;
 out vec3 Normal;
+out vec3 posInWorld;
 
 uniform mat4 uViewProj;
 
 void main() {
-    gl_Position = uViewProj * vec4(aPos+aPositionCube, 1.0);
+	posInWorld = aPos+aPositionCube;
+    gl_Position = uViewProj * vec4(posInWorld, 1.0);
 	fragPos = vec3(vec4(aPos, 1.0));
 	vColorCube = aColorCube;
 	Normal = aNormal;
