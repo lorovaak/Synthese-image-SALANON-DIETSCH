@@ -143,6 +143,8 @@ void CubesExistants::draw(const glimac::TrackballCamera & cam, const glm::vec4 &
     // Light of the world (color and intensity and position)
     m_shader.setUniform4f("uLightColor", lightEffect);
     m_shader.setUniform3f("uLightPos", 26.f, 55.0f, 40.0f);
+	glm::vec3 lightDir = glm::normalize(glm::vec3(-10.f, -55.0f, 3.0f));
+	m_shader.setUniform3f("uLightDir", lightDir.x, lightDir.y, lightDir.z);
 
 
 	// Draw call
